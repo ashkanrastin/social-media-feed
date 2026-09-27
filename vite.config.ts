@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
+      '/avatars': mockServerOrigin,
       '/images': mockServerOrigin,
       '/posts': mockServerOrigin
     }

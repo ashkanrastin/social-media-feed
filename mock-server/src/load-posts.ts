@@ -2,7 +2,7 @@ import { isNothing, just, nothing, type Maybe } from 'true-myth/maybe';
 import { err, ok, tryOrElse, type Result } from 'true-myth/result';
 import { fromPromise, fromResult, type Task } from 'true-myth/task';
 import { isFeedStatus, type FeedPost } from './feed-post';
-import { isRecord, readString } from './unknown-record';
+import { isRecord, readNumber, readString } from './unknown-record';
 
 function readTags(value: unknown): Maybe<readonly string[]> {
   if (!Array.isArray(value)) {
@@ -50,6 +50,36 @@ type PostDetails = {
   readonly status: FeedPost['status'];
 };
 
+type SocialDetails = {
+  readonly avatar: string;
+  readonly commentCount: number;
+};
+
+function readAvatar(value: Readonly<Record<string, unknown>>): Maybe<string> {
+  const avatar = readString(value, 'avatar');
+  if (isNothing(avatar) || !avatar.value.startsWith('/avatars/')) {
+    return nothing();
+  }
+  return avatar;
+}
+
+function readCommentCount(value: Readonly<Record<string, unknown>>): Maybe<number> {
+  const count = readNumber(value, 'commentCount');
+  if (isNothing(count) || !Number.isSafeInteger(count.value) || count.value < 0) {
+    return nothing();
+  }
+  return count;
+}
+
+function readSocialDetails(value: Readonly<Record<string, unknown>>): Maybe<SocialDetails> {
+  const avatar = readAvatar(value);
+  const commentCount = readCommentCount(value);
+  if (isNothing(avatar) || isNothing(commentCount)) {
+    return nothing();
+  }
+  return just({ avatar: avatar.value, commentCount: commentCount.value });
+}
+
 function readPostDetails(value: Readonly<Record<string, unknown>>): Maybe<PostDetails> {
   const tags = readTags(value.tags);
   const image = readString(value, 'image');
@@ -72,7 +102,8 @@ function readFeedPost(value: unknown): Maybe<FeedPost> {
   }
   const text = readRequiredPostText(value);
   const details = readPostDetails(value);
-  if (isNothing(text) || isNothing(details)) {
+  const social = readSocialDetails(value);
+  if (isNothing(text) || isNothing(details) || isNothing(social)) {
     return nothing();
   }
   return just({
@@ -83,7 +114,9 @@ function readFeedPost(value: unknown): Maybe<FeedPost> {
     createdAt: text.value.createdAt,
     tags: details.value.tags,
     image: details.value.image,
-    status: details.value.status
+    status: details.value.status,
+    avatar: social.value.avatar,
+    commentCount: social.value.commentCount
   });
 }
 

@@ -1,0 +1,802 @@
+[
+  {
+    "authorName": "Amelia Harper",
+    "title": "Board Game On Friday Night",
+    "content": "We cleared the table and set out the board. Rules took a minute to recall. Laughter carried through the evening.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 37
+  },
+  {
+    "authorName": "Noah Brooks",
+    "title": "Tomato Plants Need Water",
+    "content": "The tomato plants looked thirsty after two dry days. Water soaked into the soil and leaves lifted a little. I checked the stakes while I was there.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 48
+  },
+  {
+    "authorName": "Sofia Nguyen",
+    "title": "Sunday Soup From Scratch",
+    "content": "I simmered the broth longer than usual and the kitchen smelled wonderful. A pinch of salt at the end made everything brighter. Leftovers will warm nicely tomorrow.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 39
+  },
+  {
+    "authorName": "Liam Patel",
+    "title": "Chess Match With A Friend",
+    "content": "Chess pieces moved carefully across the board. A quiet stretch of play settled in. Neither of us rushed the endgame.",
+    "tag": "games",
+    "status": "featured",
+    "commentCount": 30
+  },
+  {
+    "authorName": "Maya Morales",
+    "title": "Morning Light On Leaves",
+    "content": "Soft morning light caught the edges of new leaves. I framed the shot without rushing. The photo feels quiet and green.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 41
+  },
+  {
+    "authorName": "Ethan Keller",
+    "title": "Evening Scales On Piano",
+    "content": "I worked through scales slowly with the windows open. The room felt calm between each phrase. Practice ended when my wrists asked for rest.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 41
+  },
+  {
+    "authorName": "Clara Sato",
+    "title": "Shadow Across The Fence",
+    "content": "A long shadow stretched across the fence boards. Contrast made the grain stand out. I took three frames and kept one.",
+    "tag": "photos",
+    "status": "locked",
+    "commentCount": 29
+  },
+  {
+    "authorName": "Owen Anders",
+    "title": "Portrait Of The Dog",
+    "content": "The dog sat still for almost a second. Soft eyes and a tilted head filled the frame. Treats helped after the click.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 17
+  },
+  {
+    "authorName": "Iris Costa",
+    "title": "Weeding The Side Bed",
+    "content": "Weeds pulled free after yesterday's rain. The side bed looks neater already. I added a thin layer of mulch when I finished.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 21
+  },
+  {
+    "authorName": "Jonah Reed",
+    "title": "Quiet Streets After Rain",
+    "content": "The streets were nearly empty after the shower passed. Puddles mirrored the soft sky. I walked without hurry and noticed small shop signs.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 43
+  },
+  {
+    "authorName": "Elena Vargas",
+    "title": "Knitting A Simple Scarf",
+    "content": "Yarn slipped evenly through my fingers for an hour. The scarf lengthened row by row. Soft edges already feel wearable.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 33
+  },
+  {
+    "authorName": "Marcus Lind",
+    "title": "Mending A Torn Pocket",
+    "content": "A torn pocket took a neat line of stitches. The fabric looks almost new again. I used matching thread from the jar.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 17
+  },
+  {
+    "authorName": "Nina Walsh",
+    "title": "Clay Bowl On The Wheel",
+    "content": "Clay centered on the wheel after a few tries. Walls rose slowly under wet hands. The bowl will dry overnight.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 45
+  },
+  {
+    "authorName": "Felix Perez",
+    "title": "Chapter Ends By The Window",
+    "content": "I finished a chapter with the lamp low and the window open. The plot turned gently rather than loudly. Sleep came easily afterward.",
+    "tag": "books",
+    "status": "featured",
+    "commentCount": 30
+  },
+  {
+    "authorName": "Greta Hahn",
+    "title": "Train Ride Through Hills",
+    "content": "Hills rolled past the window for most of the ride. A soft fog hung in the valleys. I read a few pages and then just watched.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 16
+  },
+  {
+    "authorName": "Hugo Diaz",
+    "title": "Library Stack For The Week",
+    "content": "The library stack sat by the door all week. I chose one each evening after dinner. Margins stayed clean except for a few notes.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 41
+  },
+  {
+    "authorName": "Lena Monroe",
+    "title": "Embroidery On Linen Cloth",
+    "content": "Tiny stitches formed a leaf on linen. Progress is slow and oddly calming. I work a little each evening.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 7
+  },
+  {
+    "authorName": "Theo Blake",
+    "title": "Learning A New Chord",
+    "content": "A new chord shape finally settled under my fingers. I played it in a few simple progressions. The sound felt fuller than before.",
+    "tag": "music",
+    "status": "locked",
+    "commentCount": 17
+  },
+  {
+    "authorName": "Paula Chen",
+    "title": "Trying A New Spice Blend",
+    "content": "I measured the spices carefully and tasted as I went. The blend works well with roasted carrots. Next time I might add a little lemon zest.",
+    "tag": "cooking",
+    "status": "locked",
+    "commentCount": 0
+  },
+  {
+    "authorName": "Simon Foster",
+    "title": "Baking Bread On Rainy Days",
+    "content": "The dough rose slowly by the window while rain tapped the glass. Baking filled the house with a calm warmth. We sliced it still steaming.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 4
+  },
+  {
+    "authorName": "Rosa Kim",
+    "title": "Clouds Over The Field",
+    "content": "Clouds piled high over the open field. Gray and white layered in slow motion. I waited for a break of light.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 31
+  },
+  {
+    "authorName": "Victor Lane",
+    "title": "Simple Pasta For Two",
+    "content": "Garlic and oil went into the pan first, then the pasta water did the rest. Dinner was ready before the sun set. We ate on the small table.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 35
+  },
+  {
+    "authorName": "Ada Ortiz",
+    "title": "First Sprouts In Spring",
+    "content": "Tiny sprouts broke the soil in neat rows. I thinned a few so the rest could grow. The tray stays near the bright window.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 46
+  },
+  {
+    "authorName": "Bruno Price",
+    "title": "Rereading An Old Favorite",
+    "content": "An old favorite opened like a familiar room. I knew some lines by heart and still smiled. The ending felt steady and kind.",
+    "tag": "books",
+    "status": "locked",
+    "commentCount": 43
+  },
+  {
+    "authorName": "Celia Quinn",
+    "title": "Practice Session After Work",
+    "content": "After work I sat with the instrument for half an hour. Mistakes came and went without much fuss. Progress showed in the quieter passages.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 22
+  },
+  {
+    "authorName": "Derek Ramos",
+    "title": "Card Shuffle Before Dinner",
+    "content": "Cards shuffled with a soft snap before dinner. Hands dealt evenly around the circle. Scores climbed in small jumps.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 34
+  },
+  {
+    "authorName": "Eva Singh",
+    "title": "Soft Melody On Guitar",
+    "content": "Soft notes from the guitar filled the hallway. I kept the volume low so the house stayed still. A short piece was enough for tonight.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 7
+  },
+  {
+    "authorName": "Finn Tran",
+    "title": "Whittling A Small Spoon",
+    "content": "Soft wood curled away from the knife. A spoon shape began to appear. I sanded the handle until it felt smooth.",
+    "tag": "craft",
+    "status": "locked",
+    "commentCount": 13
+  },
+  {
+    "authorName": "Gina Underwood",
+    "title": "Notes In The Margins",
+    "content": "Pencil marks from years ago still show in the margins. I added a few of my own. The book feels shared across time.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 6
+  },
+  {
+    "authorName": "Harold Vaughn",
+    "title": "Puzzle Pieces On The Floor",
+    "content": "Puzzle pieces spread across the floor in color groups. Edges came together first. The picture slowly took shape.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 2
+  },
+  {
+    "authorName": "Ivy West",
+    "title": "Morning Oats With Fruit",
+    "content": "Oats, berries, and a spoon of honey made a quiet breakfast. I ate slowly and watched the light change. The bowl was empty before I knew it.",
+    "tag": "cooking",
+    "status": "featured",
+    "commentCount": 14
+  },
+  {
+    "authorName": "Jules Young",
+    "title": "Dice Roll And Laughs",
+    "content": "Dice clattered and someone cheered a lucky roll. Turns passed quickly. Snacks disappeared between rounds.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 21
+  },
+  {
+    "authorName": "Kara Zimmer",
+    "title": "Morning Walk Near Harbor",
+    "content": "Waves tapped the stones near the walkway. Gulls drifted above the water. The air smelled clean and a little cold.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 27
+  },
+  {
+    "authorName": "Leo Abbott",
+    "title": "Close Up Of Petals",
+    "content": "Petals filled the lens from edge to edge. Colors stayed soft in the shade. Dew still clung to a few tips.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 35
+  },
+  {
+    "authorName": "Mira Baker",
+    "title": "Metronome Keeps Me Steady",
+    "content": "The metronome clicked a steady pace I could trust. I matched it for a few measures, then a few more. Timing improved without strain.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 38
+  },
+  {
+    "authorName": "Ned Carson",
+    "title": "Strategy Game After Lunch",
+    "content": "A strategy game filled the afternoon after lunch. Plans changed with every draw. The winner stayed humble.",
+    "tag": "games",
+    "status": "featured",
+    "commentCount": 38
+  },
+  {
+    "authorName": "Olive Dalton",
+    "title": "Mulch Around The Roses",
+    "content": "Dark mulch settled around the rose stems. It should hold moisture through warmer days. Thorns caught my sleeve once.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 9
+  },
+  {
+    "authorName": "Pete Ellis",
+    "title": "Kitchen Window At Dusk",
+    "content": "Dusk turned the kitchen window gold. Steam from a kettle rose through the light. The room felt warm and close.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 32
+  },
+  {
+    "authorName": "Quinn Farley",
+    "title": "Sewing Curtains For Kitchen",
+    "content": "Curtain panels hung straighter once the hems were even. Morning light filters through gently now. Pins stayed in a small dish.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 25
+  },
+  {
+    "authorName": "Rita Grant",
+    "title": "Bird On The Railing",
+    "content": "A small bird paused on the railing. Feathers caught a bit of late sun. It flew before I could take a second shot.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 21
+  },
+  {
+    "authorName": "Sam Hayes",
+    "title": "Roasting Root Vegetables Tonight",
+    "content": "Root vegetables took on a deep color in the oven. Olive oil and thyme did most of the work. They were sweet and soft at the center.",
+    "tag": "cooking",
+    "status": "featured",
+    "commentCount": 22
+  },
+  {
+    "authorName": "Tara Ingram",
+    "title": "Short Stories Before Bed",
+    "content": "Short stories fit the hour before bed. Each one left a small image behind. I closed the cover and turned out the light.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 22
+  },
+  {
+    "authorName": "Uma Jensen",
+    "title": "Small Town Market Visit",
+    "content": "Vendors arranged fruit in neat rows. I bought a small bag of pears and kept walking. Local chatter filled the square.",
+    "tag": "travel",
+    "status": "featured",
+    "commentCount": 20
+  },
+  {
+    "authorName": "Vince Kline",
+    "title": "Herb Pot On The Steps",
+    "content": "Basil and parsley share a pot on the steps. Snipping a few leaves for dinner is easy now. The soil stays lightly damp.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 16
+  },
+  {
+    "authorName": "Willa Lawson",
+    "title": "Poetry On A Quiet Morning",
+    "content": "Morning light fell across a thin book of poems. I read three slowly with tea. One line stayed with me through the day.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 15
+  },
+  {
+    "authorName": "Xander Mills",
+    "title": "Paper Fold For Cards",
+    "content": "Folded paper became simple cards for notes. Creases lined up after practice. A stack sits ready by the desk.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 7
+  },
+  {
+    "authorName": "Yara Nolan",
+    "title": "Solitaire On A Rainy Day",
+    "content": "Rain kept us indoors with a deck of cards. Solitaire filled a quiet hour. The window stayed streaked and gray.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 24
+  },
+  {
+    "authorName": "Zane Owens",
+    "title": "Finishing The Last Chapter",
+    "content": "The last chapter finally arrived after many evenings. Closure felt quiet rather than dramatic. I sat for a moment before shelving it.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 13
+  },
+  {
+    "authorName": "Alice Parker",
+    "title": "Warming Up With Scales",
+    "content": "Warming up took longer than the piece itself. Fingers loosened and the tone evened out. I stopped before fatigue set in.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 25
+  },
+  {
+    "authorName": "Ben Rhodes",
+    "title": "Street Lamp After Rain",
+    "content": "Rain left the street lamp glowing in a halo. Pavement shone underfoot. I liked the quiet of the empty road.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 26
+  },
+  {
+    "authorName": "Cora Sanders",
+    "title": "Pruning The Apple Tree",
+    "content": "High branches needed a careful trim. Cuttings went into the compost pile. The tree looks more open to light.",
+    "tag": "garden",
+    "status": "featured",
+    "commentCount": 31
+  },
+  {
+    "authorName": "Dan Tucker",
+    "title": "Seedlings On The Windowsill",
+    "content": "Seedlings lean toward the glass each morning. I rotate the tray so growth stays even. Roots are already filling the cells.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 21
+  },
+  {
+    "authorName": "Elise Upton",
+    "title": "Learning To Fold Dumplings",
+    "content": "Folding the wrappers took practice and a few uneven edges. The filling stayed put once I sealed them well. Steam rose when I opened the lid.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 6
+  },
+  {
+    "authorName": "Frank Vargas",
+    "title": "Trying A Gentle Waltz",
+    "content": "A gentle waltz under my hands felt almost danceable. I repeated the middle section twice. The ending still needs a lighter touch.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 0
+  },
+  {
+    "authorName": "Grace Winters",
+    "title": "Borrowing A Neighbor's Novel",
+    "content": "A neighbor loaned a novel with a soft cover. I started it on the porch. Characters felt close by page twenty.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 7
+  },
+  {
+    "authorName": "Henry Yates",
+    "title": "Paperback On The Train Seat",
+    "content": "The paperback rode beside me on the seat. Stations passed while chapters turned. I almost missed my stop.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 46
+  },
+  {
+    "authorName": "Isla Alvarez",
+    "title": "Ferry Crossing At Dawn",
+    "content": "The ferry left just as the sky turned pale. Water slapped gently against the hull. I stood outside until my hands felt chilled.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 3
+  },
+  {
+    "authorName": "Jack Benson",
+    "title": "Hands Holding Fresh Clay",
+    "content": "Clay still damp on busy hands made a good subject. Texture showed clearly in side light. The workbench stayed in soft focus.",
+    "tag": "photos",
+    "status": "locked",
+    "commentCount": 42
+  },
+  {
+    "authorName": "Kate Cross",
+    "title": "Sunset From The Porch",
+    "content": "Porch boards held the last color of sunset. Shadows grew long and thin. I put the camera down and just watched.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 21
+  },
+  {
+    "authorName": "Luke Doyle",
+    "title": "Mountain Path In Mist",
+    "content": "Mist softened the trees along the path. Each step sounded on damp leaves. I stopped once to listen to a distant bird.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 24
+  },
+  {
+    "authorName": "Mona Eaton",
+    "title": "Recording A Short Duet",
+    "content": "We recorded a short duet in one take. The blend was rough but friendly. Listening back made us smile.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 4
+  },
+  {
+    "authorName": "Neil Ferguson",
+    "title": "Fingers Finding The Notes",
+    "content": "Notes that felt distant last week are closer now. I moved slowly through the hard bars. Patience paid off in the last run.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 40
+  },
+  {
+    "authorName": "Opal Gibson",
+    "title": "Herb Butter For Toast",
+    "content": "Soft butter mixed with chopped herbs spread easily on warm toast. It was a small lunch but very satisfying. I saved some for tomorrow.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 2
+  },
+  {
+    "authorName": "Paul Horton",
+    "title": "Painting A Wooden Box",
+    "content": "Paint dried in thin coats on the wooden box. Colors stayed matte and calm. The lid fits with a soft click.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 18
+  },
+  {
+    "authorName": "Ruth Iverson",
+    "title": "Quiet Hour With Violin",
+    "content": "The violin sang quietly in the spare room. Bow changes grew smoother with each pass. I put it away carefully when done.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 11
+  },
+  {
+    "authorName": "Seth Jordan",
+    "title": "Coastal Breeze And Cliffs",
+    "content": "Wind from the water tugged at my jacket. Cliffs dropped steeply beside the trail. I took a slow path back toward town.",
+    "tag": "travel",
+    "status": "locked",
+    "commentCount": 34
+  },
+  {
+    "authorName": "Tess Knox",
+    "title": "Compost Ready For Beds",
+    "content": "The compost turned dark and crumbly. I spread some into the raised beds. Worms seemed glad of the work.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 27
+  },
+  {
+    "authorName": "Uri Lambert",
+    "title": "Drum Patterns In The Basement",
+    "content": "Basement practice kept the rest of the house peaceful. Patterns grew clearer after a few repeats. Sweat and rhythm went together.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 4
+  },
+  {
+    "authorName": "Vera Mendez",
+    "title": "Team Quiz In The Living Room",
+    "content": "Questions bounced around the living room. Teams argued gently over answers. Points piled up on scrap paper.",
+    "tag": "games",
+    "status": "locked",
+    "commentCount": 47
+  },
+  {
+    "authorName": "Wade Nash",
+    "title": "Old Bridge Over River",
+    "content": "Stone arches spanned the quiet river. A few boats drifted underneath. I leaned on the rail and watched the current.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 36
+  },
+  {
+    "authorName": "Nora Olson",
+    "title": "Slow Cooker Bean Stew",
+    "content": "Beans, onion, and bay leaf cooked low for hours. The stew thickened without much stirring. A piece of bread finished the bowl.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 32
+  },
+  {
+    "authorName": "Colin Pratt",
+    "title": "Braiding Cord For Handles",
+    "content": "Cord braided into a strong handle for the tote. Tension mattered more than speed. Ends were tucked and trimmed.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 39
+  },
+  {
+    "authorName": "Diana Quincy",
+    "title": "Tile Match On The Table",
+    "content": "Tiles clicked into place on the wooden table. Matching runs brought small wins. Concentration stayed friendly.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 26
+  },
+  {
+    "authorName": "Edgar Rivers",
+    "title": "Village Square At Noon",
+    "content": "People gathered near the fountain with small bags of bread. Bells marked the hour faintly. I sat and sketched for a while.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 39
+  },
+  {
+    "authorName": "Faye Steele",
+    "title": "Word Game With Neighbors",
+    "content": "Neighbors joined for a quick word game. Letters rearranged into silly scores. Coffee cooled while we played.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 25
+  },
+  {
+    "authorName": "Gordon Thorne",
+    "title": "Forest Trail In Autumn",
+    "content": "Leaves turned copper along the trail. The air held a dry, sweet scent. I walked until the light began to fade.",
+    "tag": "travel",
+    "status": "locked",
+    "commentCount": 8
+  },
+  {
+    "authorName": "Helen Ulrich",
+    "title": "Crisp Apple Tart Practice",
+    "content": "Thin apple slices layered neatly under a simple crust. The tart browned evenly and smelled of cinnamon. We shared it while it was still warm.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 3
+  },
+  {
+    "authorName": "Ivan Vega",
+    "title": "Bookmark Left On Page",
+    "content": "A thin bookmark held my place for days. Returning felt easy. The next scene picked up without friction.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 4
+  },
+  {
+    "authorName": "Joan Watts",
+    "title": "Garlic Rice With Greens",
+    "content": "Rice cooked with garlic and a handful of greens made a steady supper. It needed only a little salt. The pan cleaned easily afterward.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 2
+  },
+  {
+    "authorName": "Keith York",
+    "title": "Frost On The Grass",
+    "content": "Frost traced fine lines across the grass. Early light made each blade sparkle. My fingers felt cold holding the camera.",
+    "tag": "photos",
+    "status": "locked",
+    "commentCount": 12
+  },
+  {
+    "authorName": "Lois Avery",
+    "title": "Mystery Novel On The Couch",
+    "content": "On the couch with a mystery, I lost track of the clock. Clues stacked carefully toward the end. I guessed wrong and did not mind.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 32
+  },
+  {
+    "authorName": "Martin Baird",
+    "title": "Whisking Eggs For Omelets",
+    "content": "Eggs whisked until frothy poured into a hot pan. Cheese melted into soft folds. Breakfast was done in a few minutes.",
+    "tag": "cooking",
+    "status": "open",
+    "commentCount": 32
+  },
+  {
+    "authorName": "Nancy Crowe",
+    "title": "Dominoes Lined On Wood",
+    "content": "Dominoes lined the edge of the table. Chains grew longer with each turn. One careful tip ended the round.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 27
+  },
+  {
+    "authorName": "Oscar Dunn",
+    "title": "Sunflowers Facing East",
+    "content": "Tall sunflowers track the morning sun. Bees visit the open faces often. Stems need a bit more support soon.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 47
+  },
+  {
+    "authorName": "Penny Ernst",
+    "title": "Trivia Night At Home",
+    "content": "Trivia cards stacked beside the sofa. Topics jumped from maps to music. We kept score in a notebook.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 1
+  },
+  {
+    "authorName": "Roger Frost",
+    "title": "Marbles Rolling Down Hall",
+    "content": "Marbles raced down the hallway floor. Soft rugs slowed a few strays. Kids and adults both took turns.",
+    "tag": "games",
+    "status": "open",
+    "commentCount": 19
+  },
+  {
+    "authorName": "Susan Gale",
+    "title": "Singing Along Softly Tonight",
+    "content": "I hummed along while washing dishes. The melody stuck with me from earlier practice. It made the chores feel shorter.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 16
+  },
+  {
+    "authorName": "Tom Hale",
+    "title": "Candle Glow On Table",
+    "content": "A single candle lit the wooden table. Shadows pooled in the corners. The frame felt intimate and still.",
+    "tag": "photos",
+    "status": "open",
+    "commentCount": 13
+  },
+  {
+    "authorName": "Ursula Irwin",
+    "title": "Stitching A Quilt Square",
+    "content": "Quilt squares joined along clean seams. Patterns start to show across the piece. I press each join before moving on.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 40
+  },
+  {
+    "authorName": "Wayne Joyce",
+    "title": "Lakeside Bench At Sunset",
+    "content": "The lake held the last orange light of day. A heron stood still in the shallows. I stayed until the color drained away.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 26
+  },
+  {
+    "authorName": "Anita Kane",
+    "title": "Reading Aloud To The Cat",
+    "content": "The cat settled against my side while I read aloud. Soft pages turned under one hand. We both stayed still for a long stretch.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 10
+  },
+  {
+    "authorName": "Brett Lyons",
+    "title": "Carving Soft Soap Bars",
+    "content": "Soap carved into small bars with a simple stamp. Scraps went aside for later use. The scent of lavender filled the room.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 46
+  },
+  {
+    "authorName": "Carol Marsh",
+    "title": "Rain Helped The Lettuce",
+    "content": "Rain soaked the lettuce overnight. Leaves look crisp and bright this morning. I harvested a small handful for lunch.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 46
+  },
+  {
+    "authorName": "Dale Norris",
+    "title": "Tuning Strings Before Rehearsal",
+    "content": "Strings needed a careful tune before we began. Once settled, the group found a shared pulse. Rehearsal closed on a soft chord.",
+    "tag": "music",
+    "status": "open",
+    "commentCount": 13
+  },
+  {
+    "authorName": "Edith Pike",
+    "title": "Staking Tall Bean Plants",
+    "content": "Bean vines climb faster than I expected. Soft ties hold them to the stakes. Flowers should follow in a week or two.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 25
+  },
+  {
+    "authorName": "Floyd Rowe",
+    "title": "Winding Road To Town",
+    "content": "Curves in the road opened onto fields and low barns. The drive felt unhurried. I stopped once for water and a stretch.",
+    "tag": "travel",
+    "status": "open",
+    "commentCount": 42
+  },
+  {
+    "authorName": "Gloria Sloan",
+    "title": "Ripples In The Pond",
+    "content": "Wind sent ripples across the pond surface. Reflections broke and reformed. I timed the shutter for a calm second.",
+    "tag": "photos",
+    "status": "featured",
+    "commentCount": 45
+  },
+  {
+    "authorName": "Hugh Tate",
+    "title": "Weaving A Narrow Band",
+    "content": "A narrow band grew on the small loom. Threads kept even with careful tension. I will sew it onto a pouch soon.",
+    "tag": "craft",
+    "status": "open",
+    "commentCount": 33
+  },
+  {
+    "authorName": "Janet Vance",
+    "title": "Thick Volume For Winter Nights",
+    "content": "A thick volume waits for cold evenings. I opened it tonight for the first time. The prose moves at a patient pace.",
+    "tag": "books",
+    "status": "open",
+    "commentCount": 27
+  },
+  {
+    "authorName": "Ken Webb",
+    "title": "Clearing Leaves From Paths",
+    "content": "Paths cleared of leaves feel wider again. I raked slowly and enjoyed the sound. The pile will feed the compost soon.",
+    "tag": "garden",
+    "status": "open",
+    "commentCount": 39
+  }
+]

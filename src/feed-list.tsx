@@ -9,12 +9,13 @@ import {
   shouldLoadNextPage,
   virtualRowCount
 } from './feed-list-state';
+import { PostCard } from './post-card';
 import type { FeedPost } from './feed-post';
 import type { FeedPage } from './read-post-page';
 
 type RowVirtualizer = ReturnType<typeof useVirtualizer<HTMLDivElement, HTMLDivElement>>;
 
-const estimatedRowHeight = 120;
+const estimatedRowHeight = 560;
 const rowOverscan = 5;
 const loadingMoreLabel = 'Loading more';
 const retryLabel = 'Try again';
@@ -138,10 +139,9 @@ type PostRowProps = {
 
 function PostRow(props: PostRowProps): JSX.Element {
   return (
-    <article className='px-6 py-4'>
-      <h2 className='text-lg font-semibold [overflow-wrap:anywhere]'>{props.post.title}</h2>
-      <p className='mt-2 whitespace-pre-wrap [overflow-wrap:anywhere]'>{props.post.content}</p>
-    </article>
+    <div className='px-4 py-2'>
+      <PostCard post={props.post} />
+    </div>
   );
 }
 

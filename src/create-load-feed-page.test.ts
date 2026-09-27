@@ -32,7 +32,9 @@ const post: FeedPost = {
   createdAt: '2026-09-01T00:00:00.000Z',
   tags: ['technology'],
   status: 'open',
-  image: '/images/01.jpg'
+  image: '/images/01.jpg',
+  avatar: '/avatars/01.svg',
+  commentCount: 3
 };
 
 const namedSearch: FeedSearch = {

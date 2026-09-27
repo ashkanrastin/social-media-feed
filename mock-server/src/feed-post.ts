@@ -11,6 +11,8 @@ export type FeedPost = {
   readonly tags: readonly string[];
   readonly status: FeedStatus;
   readonly image: string;
+  readonly avatar: string;
+  readonly commentCount: number;
 };
 
 export function isFeedStatus(value: string): value is FeedStatus {

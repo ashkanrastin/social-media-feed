@@ -12,7 +12,9 @@ const feedPostSchema = z
     createdAt: z.string().min(1),
     tags: z.array(z.string()),
     status: z.enum(feedStatuses),
-    image: z.string().startsWith('/images/')
+    image: z.string().startsWith('/images/'),
+    avatar: z.string().startsWith('/avatars/'),
+    commentCount: z.number().int().nonnegative()
   })
   .readonly();
 
@@ -35,7 +37,9 @@ function toFeedPost(value: z.infer<typeof feedPostSchema>): FeedPost {
     createdAt: value.createdAt,
     tags: value.tags,
     status: value.status,
-    image: value.image
+    image: value.image,
+    avatar: value.avatar,
+    commentCount: value.commentCount
   };
 }
 
