@@ -30,7 +30,11 @@ const toLabel = 'To';
 const anyLabel = 'Any';
 const applyLabel = 'Apply';
 const resetLabel = 'Reset';
-const fieldClassName = 'rounded-lg border border-stone-300 bg-white px-3 py-2 text-base text-stone-900';
+const fieldClassName =
+  'rounded-lg border border-stone-300 bg-white px-3 py-2 text-base text-stone-900 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100';
+const labelClassName = 'grid gap-1 text-sm text-stone-600 dark:text-stone-400';
+const quietButtonClassName =
+  'shrink-0 rounded-lg border border-stone-300 bg-white text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100';
 
 const feedFilterTags = ['books', 'cooking', 'craft', 'games', 'garden', 'music', 'photos', 'travel'] as const;
 
@@ -124,7 +128,7 @@ function FilterDialog(props: FilterDialogProps): JSX.Element {
     <dialog
       ref={rememberDialog}
       aria-labelledby={filtersTitleId}
-      className='m-auto w-[min(32rem,calc(100%-2rem))] rounded-2xl border border-stone-200 bg-white p-6 backdrop:bg-stone-900/40'
+      className='m-auto w-[min(32rem,calc(100%-2rem))] rounded-2xl border border-stone-200 bg-white p-6 backdrop:bg-stone-950/60 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100'
       onClick={closeFromBackdrop}
       onClose={props.onClose}
     >
@@ -132,7 +136,7 @@ function FilterDialog(props: FilterDialogProps): JSX.Element {
         <h2 className='text-xl font-semibold' id={filtersTitleId}>
           {filtersTitle}
         </h2>
-        <label className='grid gap-1 text-sm text-stone-600'>
+        <label className={labelClassName}>
           {tagLabel}
           <select className={fieldClassName} onChange={changeTag} value={props.draft.tag}>
             <option value=''>{anyLabel}</option>
@@ -145,7 +149,7 @@ function FilterDialog(props: FilterDialogProps): JSX.Element {
             })}
           </select>
         </label>
-        <label className='grid gap-1 text-sm text-stone-600'>
+        <label className={labelClassName}>
           {statusLabel}
           <select className={fieldClassName} onChange={changeStatus} value={props.draft.status}>
             <option value=''>{anyLabel}</option>
@@ -158,19 +162,22 @@ function FilterDialog(props: FilterDialogProps): JSX.Element {
             })}
           </select>
         </label>
-        <label className='grid gap-1 text-sm text-stone-600'>
+        <label className={labelClassName}>
           {fromLabel}
           <input className={fieldClassName} onChange={changeFrom} type='date' value={props.draft.from} />
         </label>
-        <label className='grid gap-1 text-sm text-stone-600'>
+        <label className={labelClassName}>
           {toLabel}
           <input className={fieldClassName} onChange={changeTo} type='date' value={props.draft.to} />
         </label>
         <div className='mt-3 flex justify-end gap-3'>
-          <button className='rounded-lg border border-stone-300 px-4 py-2' onClick={props.onReset} type='button'>
+          <button className={`${quietButtonClassName} px-4 py-2`} onClick={props.onReset} type='button'>
             {resetLabel}
           </button>
-          <button className='rounded-lg bg-stone-900 px-4 py-2 text-white' type='submit'>
+          <button
+            className='rounded-lg bg-stone-900 px-4 py-2 text-white dark:bg-stone-100 dark:text-stone-900'
+            type='submit'
+          >
             {applyLabel}
           </button>
         </div>
@@ -186,7 +193,7 @@ export function FeedSearchField(props: FeedSearchFieldProps): JSX.Element {
   return (
     <input
       aria-label={searchLabel}
-      className='w-full min-w-0 max-w-xs rounded-lg border border-stone-300 bg-white px-3 py-2 text-base text-stone-900'
+      className={`${fieldClassName} w-full min-w-0 max-w-xs`}
       onChange={changeText}
       placeholder={searchLabel}
       type='search'
@@ -217,11 +224,7 @@ export function FeedFilters(props: FeedFiltersProps): JSX.Element {
   }
   return (
     <React.Fragment>
-      <button
-        className='shrink-0 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm'
-        onClick={openDialog}
-        type='button'
-      >
+      <button className={`${quietButtonClassName} px-3 py-2`} onClick={openDialog} type='button'>
         {filtersLabel(props.search)}
       </button>
       <FilterDialog

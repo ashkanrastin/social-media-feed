@@ -1,9 +1,10 @@
 import type { WallClock } from '@enormora/wall-clock/wall-clock';
-import React, { type JSX } from 'react';
+import React, { useState, type JSX } from 'react';
 import type { LoadFeedPage } from './create-load-feed-page';
 import { FeedFilters, FeedSearchField } from './feed-filters';
 import { FeedList } from './feed-list';
 import type { FeedSearch } from './feed-search';
+import { ThemeToggle, type FeedTheme } from './theme-toggle';
 import { feedQueryKey, useFeedPages } from './use-feed-pages';
 import { useFeedSearch } from './use-feed-search';
 import type { FeedPage } from './read-post-page';
@@ -36,6 +37,15 @@ function isEmptyFeed(pages: readonly FeedPage[]): boolean {
     return false;
   }
   return page.posts.length === 0;
+}
+
+function mainClassName(theme: FeedTheme): string {
+  const colors =
+    'flex h-dvh flex-col bg-stone-100 font-sans text-stone-900 dark:bg-stone-950 dark:text-stone-100 dark:[color-scheme:dark]';
+  if (theme === 'dark') {
+    return `${colors} dark`;
+  }
+  return colors;
 }
 
 function EmptyMatch(props: EmptyMatchProps): JSX.Element {
@@ -74,13 +84,15 @@ export function App(props: AppProps): JSX.Element {
     wallClock: props.wallClock
   });
   const query = useFeedPages(props.loadFeedPage, controls.search);
+  const [theme, setTheme] = useState<FeedTheme>('light');
   return (
-    <main className='flex h-dvh flex-col bg-stone-100 font-sans text-stone-900'>
+    <main className={mainClassName(theme)}>
       <header className='flex items-center gap-3 px-4 pt-6 pb-4 sm:px-6'>
         <h1 className='shrink-0 text-2xl font-semibold sm:text-3xl'>{feedTitle}</h1>
         <div className='ml-auto flex min-w-0 items-center gap-3'>
           <FeedSearchField onText={controls.setDraftText} value={controls.draftText} />
           <FeedFilters onSearch={controls.replaceSearch} search={controls.search} />
+          <ThemeToggle onTheme={setTheme} theme={theme} />
         </div>
       </header>
       <div className='flex min-h-0 flex-1 flex-col'>

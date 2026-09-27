@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import { createDeterministicWallClock } from '@enormora/wall-clock/deterministic-wall-clock';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import React, { type JSX, type ReactNode } from 'react';
 import { nothing } from 'true-myth/maybe';
 import { ok } from 'true-myth/result';
@@ -55,5 +55,16 @@ describe('app', function () {
     assert.strictEqual(heading.tagName, 'H1');
     await view.findByRole('list', { name: feedListLabel });
     assert.deepStrictEqual(writtenQueries, []);
+  });
+
+  it('switches the page to dark mode', function () {
+    cleanup();
+    const view = renderApp();
+    const button = view.getByRole('button', { name: 'Dark mode' });
+
+    fireEvent.click(button);
+
+    assert.strictEqual(view.container.querySelector('main.dark') instanceof HTMLElement, true);
+    assert.strictEqual(view.getByRole('button', { name: 'Light mode' }).getAttribute('aria-pressed'), 'true');
   });
 });
