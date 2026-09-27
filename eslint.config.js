@@ -5,7 +5,7 @@ import { noTsEnumDeclarationRestriction, typescriptConfig } from '@enormora/esli
 import { vitestNodeAssertConfig } from '@enormora/eslint-config-vitest-node-assert';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
-const entryPointTypeScriptFiles = ['src/main.tsx'];
+const entryPointTypeScriptFiles = ['src/main.tsx', 'mock-server/src/main.ts'];
 const maxLinesPerFile = 500;
 const runtimeGlobalMessage =
   'Runtime globals belong at the composition root. Pass the value or a capability into application code.';
@@ -43,12 +43,23 @@ const typescriptRestrictedTypes = typescriptConfig.rules['@typescript-eslint/no-
 
 export default [
   {
-    ignores: ['dist/**/*', 'node_modules/**/*', 'package-lock.json', 'coverage/**/*']
+    ignores: ['dist/**/*', 'node_modules/**/*', 'package-lock.json', 'coverage/**/*', 'mock-server/data/**/*']
   },
   ...baseWithPrettierConfig,
   {
     ...browserConfig,
     files: ['src/**/*.{ts,tsx}']
+  },
+  {
+    files: ['mock-server/**/*.ts'],
+    languageOptions: {
+      globals: {
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        console: 'readonly',
+        process: 'readonly'
+      }
+    }
   },
   {
     ...typescriptConfig,
@@ -180,6 +191,7 @@ export default [
   {
     files: entryPointTypeScriptFiles,
     rules: {
+      'no-console': 'off',
       'no-restricted-globals': 'off'
     }
   },
@@ -198,6 +210,18 @@ export default [
         screen: 'off',
         test: 'off'
       }
+    }
+  },
+  {
+    files: ['mock-server/**/*.test.ts'],
+    rules: {
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+          packageDir: [import.meta.dirname]
+        }
+      ]
     }
   },
   {
