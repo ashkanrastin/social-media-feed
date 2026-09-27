@@ -19,7 +19,8 @@
   "dependencies": {
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "true-myth": "^9.4.0"
+    "true-myth": "^9.4.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@enormora/eslint-config-base": "^0.0.67",
