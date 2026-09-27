@@ -7,7 +7,7 @@ import {
 import { isNothing, just, nothing, type Maybe } from 'true-myth/maybe';
 import { isErr } from 'true-myth/result';
 import { z } from 'zod';
-import { toFeedSearchParams, type FeedSearch } from './feed-search';
+import { toFeedSearchParams, type FeedSearch } from '../search/feed-search';
 import type { LoadFeedPage } from './create-load-feed-page';
 import type { FeedPage } from './read-post-page';
 

@@ -1,8 +1,8 @@
 import { isJust, isNothing, just, nothing, type Maybe } from 'true-myth/maybe';
 import { isErr } from 'true-myth/result';
-import type { FeedPost } from './feed-post';
-import { parsePostsQuery, type PostsQuery, type SimulatedFailure } from './posts-query';
-import { selectPosts } from './select-posts';
+import type { FeedPost } from '../posts/feed-post';
+import { parsePostsQuery, type PostsQuery, type SimulatedFailure } from '../posts/posts-query';
+import { selectPosts } from '../posts/select-posts';
 
 export type HttpRequest = {
   readonly method: string;

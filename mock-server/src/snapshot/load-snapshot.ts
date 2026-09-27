@@ -1,14 +1,14 @@
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { isErr } from 'true-myth/result';
-import type { FeedPost } from './feed-post';
+import type { FeedPost } from '../posts/feed-post';
+import { loadPosts } from '../posts/load-posts';
 import type { ImageBytes } from './image-file';
 import { loadImages } from './load-images';
-import { loadPosts } from './load-posts';
 
-const postsPath = fileURLToPath(new URL('../data/posts.json', import.meta.url));
-const imagesDirectory = fileURLToPath(new URL('../data/images', import.meta.url));
-const avatarsDirectory = fileURLToPath(new URL('../data/avatars', import.meta.url));
+const postsPath = fileURLToPath(new URL('../../data/posts.json', import.meta.url));
+const imagesDirectory = fileURLToPath(new URL('../../data/images', import.meta.url));
+const avatarsDirectory = fileURLToPath(new URL('../../data/avatars', import.meta.url));
 
 export type Snapshot =
   | { readonly type: 'failure'; readonly message: string }

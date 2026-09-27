@@ -1,5 +1,5 @@
 import { isNothing, just, nothing, of, type Maybe } from 'true-myth/maybe';
-import { isFeedStatus, type FeedStatus } from './feed-post';
+import { isFeedStatus, type FeedStatus } from '../post/feed-post';
 
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 

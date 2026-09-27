@@ -2,7 +2,7 @@ import assert from 'node:assert';
 import { nothing } from 'true-myth/maybe';
 import { isErr } from 'true-myth/result';
 import { describe, it } from 'vitest';
-import type { FeedPost } from './feed-post';
+import type { FeedPost } from '../post/feed-post';
 import { readPostPage, type FeedPage } from './read-post-page';
 
 const post: FeedPost = {

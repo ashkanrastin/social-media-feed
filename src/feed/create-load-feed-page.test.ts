@@ -2,9 +2,9 @@ import assert from 'node:assert';
 import { just, nothing } from 'true-myth/maybe';
 import { isOk, type Result } from 'true-myth/result';
 import { describe, it } from 'vitest';
+import type { FeedPost } from '../post/feed-post';
+import { emptyFeedSearch, type FeedSearch } from '../search/feed-search';
 import { createLoadFeedPage, type LoadFeedPageError } from './create-load-feed-page';
-import { emptyFeedSearch, type FeedSearch } from './feed-search';
-import type { FeedPost } from './feed-post';
 import type { FeedPage } from './read-post-page';
 
 function failureOf(page: Result<FeedPage, LoadFeedPageError>): string {

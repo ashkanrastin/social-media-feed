@@ -4,7 +4,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { isNothing, of } from 'true-myth/maybe';
 import { App } from './app';
-import { createLoadFeedPage } from './create-load-feed-page';
+import { createLoadFeedPage } from './feed/create-load-feed-page';
 
 const queryClient = new QueryClient();
 const loadFeedPage = createLoadFeedPage({ fetch: fetch.bind(globalThis) });

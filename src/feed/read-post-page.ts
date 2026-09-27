@@ -1,7 +1,7 @@
 import { of, type Maybe } from 'true-myth/maybe';
 import { err, ok, type Result } from 'true-myth/result';
 import { z } from 'zod';
-import { feedStatuses, type FeedPost } from './feed-post';
+import { feedStatuses, type FeedPost } from '../post/feed-post';
 
 const feedPostSchema = z
   .object({

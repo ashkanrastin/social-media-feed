@@ -1,7 +1,7 @@
 import { isNothing, type Maybe } from 'true-myth/maybe';
 import type { Result } from 'true-myth/result';
 import { fromPromise, fromResult, reject, type Task } from 'true-myth/task';
-import { toFeedSearchParams, type FeedSearch } from './feed-search';
+import { toFeedSearchParams, type FeedSearch } from '../search/feed-search';
 import { readPostPage, type FeedPage } from './read-post-page';
 
 const pageLimit = 50;

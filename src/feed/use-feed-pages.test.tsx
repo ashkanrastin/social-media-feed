@@ -5,8 +5,8 @@ import React, { type JSX, type ReactNode } from 'react';
 import { just, nothing } from 'true-myth/maybe';
 import { ok } from 'true-myth/result';
 import { describe, it } from 'vitest';
+import { emptyFeedSearch } from '../search/feed-search';
 import type { LoadFeedPage } from './create-load-feed-page';
-import { emptyFeedSearch } from './feed-search';
 import { feedQueryKey, nextPageParam, useFeedPages } from './use-feed-pages';
 
 const firstPost = {

@@ -1,6 +1,6 @@
 import { isJust, isNothing, just, nothing, type Maybe } from 'true-myth/maybe';
 import { isErr } from 'true-myth/result';
-import type { FeedPost } from './feed-post';
+import type { FeedPost } from './posts/feed-post';
 import {
   decideMockResponse,
   failureBody,
@@ -8,9 +8,9 @@ import {
   HttpStatus,
   jsonHeaders,
   type HttpRequest
-} from './decide-mock-response';
-import { contentTypeFor, imageFilename, type ImageBytes } from './image-file';
-import { parsePostsQuery, type SimulatedFailure } from './posts-query';
+} from './http/decide-mock-response';
+import { contentTypeFor, imageFilename, type ImageBytes } from './snapshot/image-file';
+import { parsePostsQuery, type SimulatedFailure } from './posts/posts-query';
 
 export type Schedule = (delayInMilliseconds: number, handle: () => void) => void;
 

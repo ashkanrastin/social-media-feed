@@ -7,7 +7,7 @@ import { nothing } from 'true-myth/maybe';
 import { ok } from 'true-myth/result';
 import { describe, it } from 'vitest';
 import { App, feedTitle } from './app';
-import { feedListLabel } from './feed-list';
+import { feedListLabel } from './feed/feed-list';
 
 const wallClock = createDeterministicWallClock({
   initialCurrentTimestampInMilliseconds: 0

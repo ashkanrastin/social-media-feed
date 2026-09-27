@@ -1,8 +1,8 @@
 import { createServer } from 'node:http';
 import { createWallClock } from '@enormora/wall-clock/wall-clock';
 import { createMockServer, type HttpResponseWriter } from './create-mock-server';
-import { HttpStatus, type HttpRequest } from './decide-mock-response';
-import { loadSnapshot } from './load-snapshot';
+import { HttpStatus, type HttpRequest } from './http/decide-mock-response';
+import { loadSnapshot } from './snapshot/load-snapshot';
 
 const defaultMockPort = 4010;
 const highestTcpPort = 65_535;

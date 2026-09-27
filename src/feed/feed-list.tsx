@@ -2,6 +2,8 @@ import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
 import React, { useCallback, useEffect, useRef, useState, type CSSProperties, type JSX, type RefCallback } from 'react';
 import { isNothing, nothing, of, type Maybe } from 'true-myth/maybe';
 import { fromPromise } from 'true-myth/task';
+import type { FeedPost } from '../post/feed-post';
+import { PostCard } from '../post/post-card';
 import {
   flattenFeedPosts,
   isLoaderRow,
@@ -9,8 +11,6 @@ import {
   shouldLoadNextPage,
   virtualRowCount
 } from './feed-list-state';
-import { PostCard } from './post-card';
-import type { FeedPost } from './feed-post';
 import type { FeedPage } from './read-post-page';
 
 type RowVirtualizer = ReturnType<typeof useVirtualizer<HTMLDivElement, HTMLDivElement>>;

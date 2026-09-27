@@ -9,7 +9,7 @@ import React, {
   type SubmitEvent as FormSubmit
 } from 'react';
 import { isNothing, nothing, of, type Maybe } from 'true-myth/maybe';
-import { feedStatuses } from './feed-post';
+import { feedStatuses } from '../post/feed-post';
 import {
   activeFilterCount,
   clearedFilters,

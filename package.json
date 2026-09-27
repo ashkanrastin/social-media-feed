@@ -9,9 +9,9 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite",
-    "mock-server": "npm start --prefix mock-server",
     "format": "prettier --write .",
     "lint": "eslint .",
+    "mock-server": "npm start --prefix mock-server",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit && tsc --noEmit -p mock-server"

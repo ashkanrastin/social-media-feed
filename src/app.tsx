@@ -1,13 +1,13 @@
 import type { WallClock } from '@enormora/wall-clock/wall-clock';
 import React, { useState, type JSX } from 'react';
-import type { LoadFeedPage } from './create-load-feed-page';
-import { FeedFilters, FeedSearchField } from './feed-filters';
-import { FeedList } from './feed-list';
-import type { FeedSearch } from './feed-search';
-import { ThemeToggle, type FeedTheme } from './theme-toggle';
-import { feedQueryKey, useFeedPages } from './use-feed-pages';
-import { useFeedSearch } from './use-feed-search';
-import type { FeedPage } from './read-post-page';
+import type { LoadFeedPage } from './feed/create-load-feed-page';
+import { FeedList } from './feed/feed-list';
+import { feedQueryKey, useFeedPages } from './feed/use-feed-pages';
+import type { FeedPage } from './feed/read-post-page';
+import { FeedFilters, FeedSearchField } from './search/feed-filters';
+import type { FeedSearch } from './search/feed-search';
+import { useFeedSearch } from './search/use-feed-search';
+import { ThemeToggle, type FeedTheme } from './theme/theme-toggle';
 
 export const feedTitle = 'Social feed';
 

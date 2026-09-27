@@ -1,8 +1,8 @@
 import { isNothing, just, nothing, type Maybe } from 'true-myth/maybe';
 import { err, ok, tryOrElse, type Result } from 'true-myth/result';
 import { fromPromise, fromResult, type Task } from 'true-myth/task';
+import { isRecord, readNumber, readString } from '../http/unknown-record';
 import { isFeedStatus, type FeedPost } from './feed-post';
-import { isRecord, readNumber, readString } from './unknown-record';
 
 function readTags(value: unknown): Maybe<readonly string[]> {
   if (!Array.isArray(value)) {
