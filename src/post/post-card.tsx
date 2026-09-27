@@ -1,9 +1,13 @@
 import React, { type JSX } from 'react';
 import type { FeedPost } from './feed-post';
+import { LikeButton } from './like-button';
+import type { PostLike } from './post-like';
 import { commentCountLabel, publishedOnLabel } from './post-card-text';
 
 type PostCardProps = {
   readonly post: FeedPost;
+  readonly like: PostLike;
+  readonly onLike: () => void;
 };
 
 export function PostCard(props: PostCardProps): JSX.Element {
@@ -26,7 +30,10 @@ export function PostCard(props: PostCardProps): JSX.Element {
         </p>
       </div>
       <img alt='' className='mt-4 aspect-[3/2] w-full bg-stone-200 object-cover dark:bg-stone-800' src={post.image} />
-      <p className='px-4 py-3 text-sm text-stone-500 dark:text-stone-400'>{commentCountLabel(post.commentCount)}</p>
+      <div className='flex items-center gap-4 px-4 py-3'>
+        <LikeButton count={props.like.count} liked={props.like.liked} onLike={props.onLike} />
+        <p className='text-sm text-stone-500 dark:text-stone-400'>{commentCountLabel(post.commentCount)}</p>
+      </div>
     </article>
   );
 }

@@ -1,7 +1,7 @@
 import type { WallClock } from '@enormora/wall-clock/wall-clock';
 import React, { useState, type JSX } from 'react';
 import { feedDelayInMilliseconds, type LoadFeedPage } from './feed/create-load-feed-page';
-import { FeedList, FeedSkeleton } from './feed/feed-list';
+import { FeedList, FeedSkeleton, type NextLikeStatus } from './feed/feed-list';
 import { feedQueryKey, useFeedPages } from './feed/use-feed-pages';
 import type { FeedPage } from './feed/read-post-page';
 import { FeedFilters, FeedSearchField } from './search/feed-filters';
@@ -21,12 +21,15 @@ type AppProps = {
   readonly wallClock: WallClock;
   readonly readSearchParams: () => URLSearchParams;
   readonly writeSearchParams: (params: URLSearchParams) => void;
+  readonly nextLikeStatus: NextLikeStatus;
 };
 
 type FeedLoadProps = {
   readonly query: ReturnType<typeof useFeedPages>;
   readonly search: FeedSearch;
   readonly delayInMilliseconds: number;
+  readonly wallClock: WallClock;
+  readonly nextLikeStatus: NextLikeStatus;
 };
 
 type EmptyMatchProps = {
@@ -101,7 +104,9 @@ function FeedLoad(props: FeedLoadProps): JSX.Element {
         isFetchNextPageError={props.query.isFetchNextPageError}
         isFetchingNextPage={props.query.isFetchingNextPage}
         pages={props.query.data.pages}
+        nextLikeStatus={props.nextLikeStatus}
         queryKey={feedQueryKey(props.search, props.delayInMilliseconds).join(' ')}
+        wallClock={props.wallClock}
       />
     </React.Fragment>
   );
@@ -130,7 +135,13 @@ export function App(props: AppProps): JSX.Element {
         <DebugDelayButton onSlow={setSlow} slow={slow} />
       </div>
       <div className='flex min-h-0 flex-1 flex-col'>
-        <FeedLoad delayInMilliseconds={feedDelayInMilliseconds(slow)} query={query} search={controls.search} />
+        <FeedLoad
+          delayInMilliseconds={feedDelayInMilliseconds(slow)}
+          nextLikeStatus={props.nextLikeStatus}
+          query={query}
+          search={controls.search}
+          wallClock={props.wallClock}
+        />
       </div>
     </main>
   );

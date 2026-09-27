@@ -27,6 +27,10 @@ function writeSearchParams(params: URLSearchParams): void {
   writtenQueries.push(params.toString());
 }
 
+function succeedLike(): 200 {
+  return 200;
+}
+
 function renderApp(waitForPosts = false): ReturnType<typeof render> {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } }
@@ -48,6 +52,7 @@ function renderApp(waitForPosts = false): ReturnType<typeof render> {
         return ok({ posts: [], nextCursor: nothing() });
       }}
       readSearchParams={readSearchParams}
+      nextLikeStatus={succeedLike}
       wallClock={wallClock}
       writeSearchParams={writeSearchParams}
     />,

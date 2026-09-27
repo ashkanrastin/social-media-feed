@@ -11,9 +11,9 @@ import React, {
 } from 'react';
 import { isNothing, just, nothing, of, type Maybe } from 'true-myth/maybe';
 import { fromPromise } from 'true-myth/task';
-import { focusRingClassName } from '../focus-ring';
 import type { FeedPost } from '../post/feed-post';
 import { PostCard } from '../post/post-card';
+import { LikeToast, usePostLikes, type PostLikes, type UsePostLikesDependencies } from '../post/use-post-likes';
 import {
   flattenFeedPosts,
   isLoaderRow,
@@ -37,7 +37,9 @@ export const feedListLabel = 'Posts';
 
 type FetchNextPage = () => Promise<unknown>;
 
-type FeedListProps = {
+export type NextLikeStatus = UsePostLikesDependencies['nextLikeStatus'];
+
+type FeedListProps = UsePostLikesDependencies & {
   readonly pages: readonly FeedPage[];
   readonly hasNextPage: boolean;
   readonly isFetchingNextPage: boolean;
@@ -48,6 +50,7 @@ type FeedListProps = {
 
 type VirtualRowsProps = FeedListProps & {
   readonly element: HTMLDivElement;
+  readonly likes: PostLikes;
 };
 
 type RowContentProps = {
@@ -56,6 +59,7 @@ type RowContentProps = {
   readonly fetchNextPage: FetchNextPage;
   readonly isFetchNextPageError: boolean;
   readonly onPostKey: PostKeyHandler;
+  readonly likes: PostLikes;
 };
 
 function listBoxStyle(height: number): CSSProperties {
@@ -170,7 +174,7 @@ function LoaderRow(props: LoaderRowProps): JSX.Element {
   }
   if (props.isFetchNextPageError) {
     return (
-      <button type='button' className={`${focusRingClassName} px-6 py-4 text-left`} onClick={retry}>
+      <button type='button' className='focus-ring px-6 py-4 text-left' onClick={retry}>
         {retryLabel}
       </button>
     );
@@ -249,6 +253,8 @@ type PostRowProps = {
   readonly post: FeedPost;
   readonly index: number;
   readonly onPostKey: PostKeyHandler;
+  readonly like: ReturnType<PostLikes['likeForPost']>;
+  readonly onLike: () => void;
 };
 
 function PostRow(props: PostRowProps): JSX.Element {
@@ -260,13 +266,8 @@ function PostRow(props: PostRowProps): JSX.Element {
     props.onPostKey(props.index, keyEvent.key);
   }
   return (
-    <div
-      className={`${focusRingClassName} rounded-2xl px-4 py-2`}
-      data-post-focus='true'
-      onKeyDown={onKeyDown}
-      tabIndex={0}
-    >
-      <PostCard post={props.post} />
+    <div className='focus-ring rounded-2xl px-4 py-2' data-post-focus='true' onKeyDown={onKeyDown} tabIndex={0}>
+      <PostCard like={props.like} onLike={props.onLike} post={props.post} />
     </div>
   );
 }
@@ -276,7 +277,17 @@ function RowContent(props: RowContentProps): JSX.Element {
   if (isLoaderRow(props.item.index, props.posts.length) || isNothing(post)) {
     return <LoaderRow fetchNextPage={props.fetchNextPage} isFetchNextPageError={props.isFetchNextPageError} />;
   }
-  return <PostRow index={props.item.index} onPostKey={props.onPostKey} post={post.value} />;
+  return (
+    <PostRow
+      index={props.item.index}
+      like={props.likes.likeForPost(post.value.id)}
+      onLike={function toggleThisPost() {
+        props.likes.togglePostLike(post.value.id);
+      }}
+      onPostKey={props.onPostKey}
+      post={post.value}
+    />
+  );
 }
 
 function VirtualRows(props: VirtualRowsProps): JSX.Element {
@@ -323,8 +334,9 @@ function VirtualRows(props: VirtualRowsProps): JSX.Element {
               fetchNextPage={props.fetchNextPage}
               isFetchNextPageError={props.isFetchNextPageError}
               item={item}
-              posts={posts}
+              likes={props.likes}
               onPostKey={onPostKey}
+              posts={posts}
             />
           </div>
         );
@@ -333,7 +345,7 @@ function VirtualRows(props: VirtualRowsProps): JSX.Element {
   );
 }
 
-function scrollBody(scrollElement: Maybe<HTMLDivElement>, props: FeedListProps): JSX.Element {
+function scrollBody(scrollElement: Maybe<HTMLDivElement>, props: FeedListProps, likes: PostLikes): JSX.Element {
   if (isNothing(scrollElement)) {
     return <div />;
   }
@@ -344,13 +356,20 @@ function scrollBody(scrollElement: Maybe<HTMLDivElement>, props: FeedListProps):
       hasNextPage={props.hasNextPage}
       isFetchNextPageError={props.isFetchNextPageError}
       isFetchingNextPage={props.isFetchingNextPage}
+      likes={likes}
+      nextLikeStatus={props.nextLikeStatus}
       pages={props.pages}
       queryKey={props.queryKey}
+      wallClock={props.wallClock}
     />
   );
 }
 
 export function FeedList(props: FeedListProps): JSX.Element {
+  const likes = usePostLikes({
+    nextLikeStatus: props.nextLikeStatus,
+    wallClock: props.wallClock
+  });
   const [scrollElement, setScrollElement] = useState<Maybe<HTMLDivElement>>(nothing());
   const rememberScrollElement = useCallback<RefCallback<HTMLDivElement>>(function rememberElement(element) {
     const next = of(element);
@@ -360,13 +379,16 @@ export function FeedList(props: FeedListProps): JSX.Element {
     setScrollElement(next);
   }, []);
   return (
-    <div
-      ref={rememberScrollElement}
-      aria-label={feedListLabel}
-      className='min-h-0 flex-1 overflow-x-hidden overflow-y-auto'
-      role='list'
-    >
-      {scrollBody(scrollElement, props)}
-    </div>
+    <React.Fragment>
+      <div
+        ref={rememberScrollElement}
+        aria-label={feedListLabel}
+        className='min-h-0 flex-1 overflow-x-hidden overflow-y-auto'
+        role='list'
+      >
+        {scrollBody(scrollElement, props, likes)}
+      </div>
+      <LikeToast visible={likes.toastVisible} />
+    </React.Fragment>
   );
 }

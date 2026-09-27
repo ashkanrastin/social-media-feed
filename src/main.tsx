@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { isNothing, of } from 'true-myth/maybe';
 import { App } from './app';
 import { createLoadFeedPage } from './feed/create-load-feed-page';
+import { likeAcceptedStatus, likeRejectedStatus, type LikeStatus } from './post/post-like';
 
 const queryClient = new QueryClient();
 const loadFeedPage = createLoadFeedPage({ fetch: fetch.bind(globalThis) });
@@ -20,11 +21,24 @@ function writeSearchParams(params: URLSearchParams): void {
   history.replaceState({}, '', path);
 }
 
+const likeFailureCutoff = 128;
+
+function nextLikeStatus(): LikeStatus {
+  const sample = new Uint8Array(1);
+  crypto.getRandomValues(sample);
+  const roll = sample.at(0);
+  if (typeof roll === 'number' && roll < likeFailureCutoff) {
+    return likeRejectedStatus;
+  }
+  return likeAcceptedStatus;
+}
+
 function renderApp(element: Element): void {
   createRoot(element).render(
     <QueryClientProvider client={queryClient}>
       <App
         loadFeedPage={loadFeedPage}
+        nextLikeStatus={nextLikeStatus}
         readSearchParams={readSearchParams}
         wallClock={wallClock}
         writeSearchParams={writeSearchParams}
