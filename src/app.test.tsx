@@ -1,4 +1,5 @@
 import assert from 'node:assert';
+import { createDeterministicWallClock } from '@enormora/wall-clock/deterministic-wall-clock';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import React, { type JSX, type ReactNode } from 'react';
@@ -7,15 +8,24 @@ import { ok } from 'true-myth/result';
 import { describe, it } from 'vitest';
 import { App, feedTitle } from './app';
 import { feedListLabel } from './feed-list';
-import type { LoadFeedPage } from './create-load-feed-page';
 
-const loadFeedPage: LoadFeedPage = async function loadFeedPage() {
-  return ok({ posts: [], nextCursor: nothing() });
-};
+const wallClock = createDeterministicWallClock({
+  initialCurrentTimestampInMilliseconds: 0
+});
 
 type WrapperProps = {
   readonly children: ReactNode;
 };
+
+function readSearchParams(): URLSearchParams {
+  return new URLSearchParams();
+}
+
+const writtenQueries: string[] = [];
+
+function writeSearchParams(params: URLSearchParams): void {
+  writtenQueries.push(params.toString());
+}
 
 function renderApp(): ReturnType<typeof render> {
   const client = new QueryClient({
@@ -24,7 +34,17 @@ function renderApp(): ReturnType<typeof render> {
   function Wrapper(props: WrapperProps): JSX.Element {
     return <QueryClientProvider client={client}>{props.children}</QueryClientProvider>;
   }
-  return render(<App loadFeedPage={loadFeedPage} />, { wrapper: Wrapper });
+  return render(
+    <App
+      loadFeedPage={async function loadFeedPage() {
+        return ok({ posts: [], nextCursor: nothing() });
+      }}
+      readSearchParams={readSearchParams}
+      wallClock={wallClock}
+      writeSearchParams={writeSearchParams}
+    />,
+    { wrapper: Wrapper }
+  );
 }
 
 describe('app', function () {
@@ -34,5 +54,6 @@ describe('app', function () {
 
     assert.strictEqual(heading.tagName, 'H1');
     await view.findByRole('list', { name: feedListLabel });
+    assert.deepStrictEqual(writtenQueries, []);
   });
 });

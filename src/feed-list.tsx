@@ -223,7 +223,7 @@ export function FeedList(props: FeedListProps): JSX.Element {
     <div
       ref={rememberScrollElement}
       aria-label={feedListLabel}
-      className='h-[calc(100dvh-7rem)] overflow-x-hidden overflow-y-auto'
+      className='min-h-0 flex-1 overflow-x-hidden overflow-y-auto'
       role='list'
     >
       {scrollBody(scrollElement, props)}

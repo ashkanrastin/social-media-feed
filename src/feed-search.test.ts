@@ -1,7 +1,18 @@
 import assert from 'node:assert';
 import { nothing } from 'true-myth/maybe';
 import { describe, it } from 'vitest';
-import { readFeedSearch, toFeedSearchParams, type FeedSearch } from './feed-search';
+import {
+  activeFilterCount,
+  clearedFilters,
+  readFeedSearch,
+  toFeedSearchParams,
+  withDraftFilters,
+  withSearchFrom,
+  withSearchStatus,
+  withSearchText,
+  withSearchTo,
+  type FeedSearch
+} from './feed-search';
 
 const emptySearch: FeedSearch = {
   text: nothing(),
@@ -53,5 +64,44 @@ describe('feed search', function () {
 
     assert.deepStrictEqual(fieldsOf(search), fieldsOf(emptySearch));
     assert.strictEqual(toFeedSearchParams(search).toString(), '');
+  });
+
+  it('trims search text and drops an unknown status', function () {
+    const withText = withSearchText(emptySearch, '  ada  ');
+    const withStatus = withSearchStatus(withText, 'nope');
+
+    assert.deepStrictEqual(fieldsOf(withStatus), {
+      text: 'ada',
+      tag: '',
+      status: '',
+      from: '',
+      to: ''
+    });
+  });
+
+  it('keeps a date and drops a value that is not a date', function () {
+    const dated = withSearchTo(withSearchFrom(emptySearch, '2026-09-01'), 'yesterday');
+
+    assert.deepStrictEqual(fieldsOf(dated), {
+      text: '',
+      tag: '',
+      status: '',
+      from: '2026-09-01',
+      to: ''
+    });
+  });
+
+  it('applies draft filters and keeps the search text', function () {
+    const search = withSearchText(emptySearch, 'ada');
+    const next = withDraftFilters(search, { tag: 'garden', status: 'open', from: '2026-09-01', to: '' });
+
+    assert.strictEqual(activeFilterCount(next), 3);
+    assert.deepStrictEqual(fieldsOf(clearedFilters(next)), {
+      text: 'ada',
+      tag: '',
+      status: '',
+      from: '',
+      to: ''
+    });
   });
 });
