@@ -6,6 +6,7 @@ import { nothing } from 'true-myth/maybe';
 import { ok } from 'true-myth/result';
 import { describe, it } from 'vitest';
 import { App, feedTitle } from './app';
+import { feedListLabel } from './feed-list';
 import type { LoadFeedPage } from './create-load-feed-page';
 
 const loadFeedPage: LoadFeedPage = async function loadFeedPage() {
@@ -32,6 +33,6 @@ describe('app', function () {
     const heading = await view.findByRole('heading', { name: feedTitle });
 
     assert.strictEqual(heading.tagName, 'H1');
-    await view.findByText('0 posts loaded');
+    await view.findByRole('list', { name: feedListLabel });
   });
 });

@@ -1,8 +1,8 @@
 import React, { type JSX } from 'react';
 import type { LoadFeedPage } from './create-load-feed-page';
+import { FeedList } from './feed-list';
 import { emptyFeedSearch } from './feed-search';
-import type { FeedPage } from './read-post-page';
-import { useFeedPages } from './use-feed-pages';
+import { feedQueryKey, useFeedPages } from './use-feed-pages';
 
 export const feedTitle = 'Social feed';
 
@@ -17,16 +17,6 @@ type FeedLoadProps = {
   readonly query: ReturnType<typeof useFeedPages>;
 };
 
-function countPosts(pages: readonly FeedPage[]): number {
-  return pages.reduce(function add(total, page) {
-    return total + page.posts.length;
-  }, 0);
-}
-
-function readyLabel(count: number): string {
-  return `${String(count)} posts loaded`;
-}
-
 function FeedLoad(props: FeedLoadProps): JSX.Element {
   if (props.query.status === 'pending') {
     return <p className='px-6 pb-8'>{postsLoadingLabel}</p>;
@@ -34,7 +24,16 @@ function FeedLoad(props: FeedLoadProps): JSX.Element {
   if (props.query.status === 'error') {
     return <p className='px-6 pb-8'>{postsFailedLabel}</p>;
   }
-  return <p className='px-6 pb-8'>{readyLabel(countPosts(props.query.data.pages))}</p>;
+  return (
+    <FeedList
+      fetchNextPage={props.query.fetchNextPage}
+      hasNextPage={props.query.hasNextPage}
+      isFetchNextPageError={props.query.isFetchNextPageError}
+      isFetchingNextPage={props.query.isFetchingNextPage}
+      pages={props.query.data.pages}
+      queryKey={feedQueryKey(emptyFeedSearch).join(' ')}
+    />
+  );
 }
 
 export function App(props: AppProps): JSX.Element {
