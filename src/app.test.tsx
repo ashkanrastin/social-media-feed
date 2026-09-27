@@ -1,14 +1,37 @@
 import assert from 'node:assert';
-import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
+import React, { type JSX, type ReactNode } from 'react';
+import { nothing } from 'true-myth/maybe';
+import { ok } from 'true-myth/result';
 import { describe, it } from 'vitest';
 import { App, feedTitle } from './app';
+import type { LoadFeedPage } from './create-load-feed-page';
+
+const loadFeedPage: LoadFeedPage = async function loadFeedPage() {
+  return ok({ posts: [], nextCursor: nothing() });
+};
+
+type WrapperProps = {
+  readonly children: ReactNode;
+};
+
+function renderApp(): ReturnType<typeof render> {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } }
+  });
+  function Wrapper(props: WrapperProps): JSX.Element {
+    return <QueryClientProvider client={client}>{props.children}</QueryClientProvider>;
+  }
+  return render(<App loadFeedPage={loadFeedPage} />, { wrapper: Wrapper });
+}
 
 describe('app', function () {
-  it('shows the feed title', function () {
-    const view = render(<App />);
-    const heading = view.getByRole('heading', { name: feedTitle });
+  it('shows the feed title', async function () {
+    const view = renderApp();
+    const heading = await view.findByRole('heading', { name: feedTitle });
 
     assert.strictEqual(heading.tagName, 'H1');
+    await view.findByText('0 posts loaded');
   });
 });

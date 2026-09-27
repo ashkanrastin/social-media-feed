@@ -11,6 +11,14 @@ export type FeedSearch = {
   readonly to: Maybe<string>;
 };
 
+export const emptyFeedSearch: FeedSearch = {
+  text: nothing<string>(),
+  tag: nothing<string>(),
+  status: nothing<FeedStatus>(),
+  from: nothing<string>(),
+  to: nothing<string>()
+};
+
 function readText(params: URLSearchParams, key: string): Maybe<string> {
   return of(params.get(key)).andThen(function ignoreEmpty(value) {
     const trimmed = value.trim();
