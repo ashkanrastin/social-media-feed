@@ -19,7 +19,8 @@ const emptySearch: FeedSearch = {
   tag: nothing(),
   status: nothing(),
   from: nothing(),
-  to: nothing()
+  to: nothing(),
+  slow: false
 };
 
 type SearchFields = {
@@ -93,9 +94,10 @@ describe('feed search', function () {
 
   it('applies draft filters and keeps the search text', function () {
     const search = withSearchText(emptySearch, 'ada');
-    const next = withDraftFilters(search, { tag: 'garden', status: 'open', from: '2026-09-01', to: '' });
+    const next = withDraftFilters(search, { tag: 'garden', status: 'open', from: '2026-09-01', to: '', slow: false });
 
     assert.strictEqual(activeFilterCount(next), 3);
+    assert.strictEqual(next.slow, false);
     assert.deepStrictEqual(fieldsOf(clearedFilters(next)), {
       text: 'ada',
       tag: '',
@@ -103,5 +105,15 @@ describe('feed search', function () {
       from: '',
       to: ''
     });
+  });
+
+  it('keeps slow loading on the address and clears it with the other filters', function () {
+    const search = readFeedSearch(new URLSearchParams('slow=1&q=ada'));
+
+    assert.strictEqual(search.slow, true);
+    assert.strictEqual(toFeedSearchParams(search).toString(), 'q=ada&slow=1');
+    assert.strictEqual(activeFilterCount(search), 1);
+    assert.strictEqual(clearedFilters(search).slow, false);
+    assert.strictEqual(readFeedSearch(new URLSearchParams('slow=no')).slow, false);
   });
 });

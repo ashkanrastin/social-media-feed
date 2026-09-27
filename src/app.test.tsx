@@ -17,21 +17,27 @@ type WrapperProps = {
   readonly children: ReactNode;
 };
 
-function readSearchParams(): URLSearchParams {
-  return new URLSearchParams();
-}
-
 const writtenQueries: string[] = [];
 
 function writeSearchParams(params: URLSearchParams): void {
   writtenQueries.push(params.toString());
 }
 
+function isChecked(element: Element): boolean {
+  if (!(element instanceof HTMLInputElement)) {
+    return false;
+  }
+  return element.checked;
+}
+
 function succeedLike(): 200 {
   return 200;
 }
 
-function renderApp(waitForPosts = false): ReturnType<typeof render> {
+function renderApp(waitForPosts = false, initialQuery = ''): ReturnType<typeof render> {
+  function readSearchParams(): URLSearchParams {
+    return new URLSearchParams(initialQuery);
+  }
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } }
   });
@@ -89,12 +95,22 @@ describe('app', function () {
     assert.strictEqual(loading.querySelector('.animate-pulse') instanceof HTMLElement, true);
   });
 
-  it('marks slow loading as pressed', function () {
+  it('stores slow loading on the address', function () {
     cleanup();
     const view = renderApp();
 
-    fireEvent.click(view.getByRole('button', { name: 'Slow loading' }));
+    fireEvent.click(view.getByRole('checkbox', { hidden: true, name: 'Slow loading' }));
+    fireEvent.click(view.getByRole('button', { hidden: true, name: 'Apply' }));
 
-    assert.strictEqual(view.getByRole('button', { name: 'Normal loading' }).getAttribute('aria-pressed'), 'true');
+    assert.strictEqual(writtenQueries.at(-1), 'slow=1');
+    assert.strictEqual(view.getByRole('button', { name: 'Filters (1)' }).tagName, 'BUTTON');
+  });
+
+  it('restores slow loading after a refresh', function () {
+    cleanup();
+    const view = renderApp(false, 'slow=1');
+
+    assert.strictEqual(view.getByRole('button', { name: 'Filters (1)' }).tagName, 'BUTTON');
+    assert.strictEqual(isChecked(view.getByRole('checkbox', { hidden: true, name: 'Slow loading' })), true);
   });
 });

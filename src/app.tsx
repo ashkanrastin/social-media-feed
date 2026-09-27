@@ -13,8 +13,6 @@ export const feedTitle = 'Social feed';
 
 const postsFailedLabel = 'Could not load posts';
 const emptyFeedLabel = 'No posts match.';
-const slowLoadingLabel = 'Slow loading';
-const normalLoadingLabel = 'Normal loading';
 
 type AppProps = {
   readonly loadFeedPage: LoadFeedPage;
@@ -51,34 +49,6 @@ function mainClassName(theme: FeedTheme): string {
     return `${colors} dark`;
   }
   return colors;
-}
-
-function debugButtonLabel(slow: boolean): string {
-  if (slow) {
-    return normalLoadingLabel;
-  }
-  return slowLoadingLabel;
-}
-
-type DebugDelayButtonProps = {
-  readonly slow: boolean;
-  readonly onSlow: (slow: boolean) => void;
-};
-
-function DebugDelayButton(props: DebugDelayButtonProps): JSX.Element {
-  function toggleSlow(): void {
-    props.onSlow(!props.slow);
-  }
-  return (
-    <button
-      aria-pressed={props.slow}
-      className='focus-ring shrink-0 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100'
-      onClick={toggleSlow}
-      type='button'
-    >
-      {debugButtonLabel(props.slow)}
-    </button>
-  );
 }
 
 function EmptyMatch(props: EmptyMatchProps): JSX.Element {
@@ -119,8 +89,7 @@ export function App(props: AppProps): JSX.Element {
     wallClock: props.wallClock
   });
   const [theme, setTheme] = useState<FeedTheme>('light');
-  const [slow, setSlow] = useState(false);
-  const query = useFeedPages(props.loadFeedPage, controls.search, feedDelayInMilliseconds(slow));
+  const query = useFeedPages(props.loadFeedPage, controls.search, feedDelayInMilliseconds(controls.search.slow));
   return (
     <main className={mainClassName(theme)}>
       <header className='flex items-center gap-3 px-4 pt-6 pb-4 sm:px-6'>
@@ -131,12 +100,9 @@ export function App(props: AppProps): JSX.Element {
           <ThemeToggle onTheme={setTheme} theme={theme} />
         </div>
       </header>
-      <div className='px-4 pb-2 sm:px-6'>
-        <DebugDelayButton onSlow={setSlow} slow={slow} />
-      </div>
       <div className='flex min-h-0 flex-1 flex-col'>
         <FeedLoad
-          delayInMilliseconds={feedDelayInMilliseconds(slow)}
+          delayInMilliseconds={feedDelayInMilliseconds(controls.search.slow)}
           nextLikeStatus={props.nextLikeStatus}
           query={query}
           search={controls.search}

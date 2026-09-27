@@ -105,7 +105,11 @@ describe('load feed page', function () {
         return Response.json({ posts: [] });
       }
     });
-    await loadFeedPage({ search: emptyFeedSearch, cursor: nothing(), delayInMilliseconds: 2000 });
+    await loadFeedPage({
+      search: { ...emptyFeedSearch, slow: true },
+      cursor: nothing(),
+      delayInMilliseconds: 2000
+    });
 
     assert.deepStrictEqual(urls, ['/posts?limit=50&delayMs=2000']);
   });

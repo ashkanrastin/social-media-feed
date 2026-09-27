@@ -1,7 +1,7 @@
 import { isNothing, type Maybe } from 'true-myth/maybe';
 import type { Result } from 'true-myth/result';
 import { fromPromise, fromResult, reject, type Task } from 'true-myth/task';
-import { toFeedSearchParams, type FeedSearch } from '../search/feed-search';
+import { slowSearchParam, toFeedSearchParams, type FeedSearch } from '../search/feed-search';
 import { readPostPage, type FeedPage } from './read-post-page';
 
 const pageLimit = 50;
@@ -33,6 +33,7 @@ type LoadFeedPageDependencies = {
 
 function requestUrl(request: FeedPageRequest): string {
   const params = toFeedSearchParams(request.search);
+  params.delete(slowSearchParam);
   params.set('limit', String(pageLimit));
   if (!isNothing(request.cursor)) {
     params.set('cursor', request.cursor.value);

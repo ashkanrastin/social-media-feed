@@ -3,12 +3,16 @@ import { isFeedStatus, type FeedStatus } from '../post/feed-post';
 
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
+export const slowSearchParam = 'slow';
+const slowSearchValue = '1';
+
 export type FeedSearch = {
   readonly text: Maybe<string>;
   readonly tag: Maybe<string>;
   readonly status: Maybe<FeedStatus>;
   readonly from: Maybe<string>;
   readonly to: Maybe<string>;
+  readonly slow: boolean;
 };
 
 export const emptyFeedSearch: FeedSearch = {
@@ -16,7 +20,8 @@ export const emptyFeedSearch: FeedSearch = {
   tag: nothing<string>(),
   status: nothing<FeedStatus>(),
   from: nothing<string>(),
-  to: nothing<string>()
+  to: nothing<string>(),
+  slow: false
 };
 
 function readText(params: URLSearchParams, key: string): Maybe<string> {
@@ -47,13 +52,18 @@ function readStatus(params: URLSearchParams): Maybe<FeedStatus> {
   });
 }
 
+function readSlow(params: URLSearchParams): boolean {
+  return readText(params, slowSearchParam).unwrapOr('') === slowSearchValue;
+}
+
 export function readFeedSearch(params: URLSearchParams): FeedSearch {
   return {
     text: readText(params, 'q'),
     tag: readText(params, 'tag'),
     status: readStatus(params),
     from: readDate(params, 'from'),
-    to: readDate(params, 'to')
+    to: readDate(params, 'to'),
+    slow: readSlow(params)
   };
 }
 
@@ -107,6 +117,7 @@ export type FilterDraft = {
   readonly status: string;
   readonly from: string;
   readonly to: string;
+  readonly slow: boolean;
 };
 
 export function draftFilters(search: FeedSearch): FilterDraft {
@@ -114,7 +125,8 @@ export function draftFilters(search: FeedSearch): FilterDraft {
     tag: search.tag.unwrapOr(''),
     status: search.status.unwrapOr(''),
     from: search.from.unwrapOr(''),
-    to: search.to.unwrapOr('')
+    to: search.to.unwrapOr(''),
+    slow: search.slow
   };
 }
 
@@ -122,7 +134,7 @@ export function withDraftFilters(search: FeedSearch, draft: FilterDraft): FeedSe
   const tagged = withSearchTag(search, draft.tag);
   const withStatus = withSearchStatus(tagged, draft.status);
   const withFrom = withSearchFrom(withStatus, draft.from);
-  return withSearchTo(withFrom, draft.to);
+  return { ...withSearchTo(withFrom, draft.to), slow: draft.slow };
 }
 
 export function clearedFilters(search: FeedSearch): FeedSearch {
@@ -131,15 +143,23 @@ export function clearedFilters(search: FeedSearch): FeedSearch {
     tag: nothing<string>(),
     status: nothing<FeedStatus>(),
     from: nothing<string>(),
-    to: nothing<string>()
+    to: nothing<string>(),
+    slow: false
   };
 }
 
-export function activeFilterCount(search: FeedSearch): number {
+function countedFilters(search: FeedSearch): number {
   const fields = [search.tag, search.status, search.from, search.to];
   return fields.filter(function selected(field) {
     return !isNothing(field);
   }).length;
+}
+
+export function activeFilterCount(search: FeedSearch): number {
+  if (search.slow) {
+    return countedFilters(search) + 1;
+  }
+  return countedFilters(search);
 }
 
 export function toFeedSearchParams(search: FeedSearch): URLSearchParams {
@@ -149,5 +169,8 @@ export function toFeedSearchParams(search: FeedSearch): URLSearchParams {
   setWhenPresent(params, 'status', search.status.unwrapOr(''));
   setWhenPresent(params, 'from', search.from.unwrapOr(''));
   setWhenPresent(params, 'to', search.to.unwrapOr(''));
+  if (search.slow) {
+    params.set(slowSearchParam, slowSearchValue);
+  }
   return params;
 }
