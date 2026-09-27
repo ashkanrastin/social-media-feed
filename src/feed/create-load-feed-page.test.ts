@@ -51,7 +51,7 @@ describe('load feed page', function () {
         return Response.json({ posts: [post], nextCursor: '50' });
       }
     });
-    const page = await loadFeedPage({ search: namedSearch, cursor: nothing() });
+    const page = await loadFeedPage({ search: namedSearch, cursor: nothing(), delayInMilliseconds: 0 });
 
     assert.deepStrictEqual(urls, ['/posts?q=ada&limit=50']);
     assert.deepStrictEqual(
@@ -70,7 +70,7 @@ describe('load feed page', function () {
         return Response.json({ posts: [] });
       }
     });
-    await loadFeedPage({ search: emptyFeedSearch, cursor: just('50') });
+    await loadFeedPage({ search: emptyFeedSearch, cursor: just('50'), delayInMilliseconds: 0 });
 
     assert.deepStrictEqual(urls, ['/posts?limit=50&cursor=50']);
   });
@@ -81,7 +81,7 @@ describe('load feed page', function () {
         return new Response('nope', { status: 500 });
       }
     });
-    const page = await loadFeedPage({ search: emptyFeedSearch, cursor: nothing() });
+    const page = await loadFeedPage({ search: emptyFeedSearch, cursor: nothing(), delayInMilliseconds: 0 });
 
     assert.strictEqual(failureOf(page), 'invalid');
   });
@@ -92,8 +92,21 @@ describe('load feed page', function () {
         throw new Error('offline');
       }
     });
-    const page = await loadFeedPage({ search: emptyFeedSearch, cursor: nothing() });
+    const page = await loadFeedPage({ search: emptyFeedSearch, cursor: nothing(), delayInMilliseconds: 0 });
 
     assert.strictEqual(failureOf(page), 'network');
+  });
+
+  it('sends delayMs when loading is slowed', async function () {
+    const urls: string[] = [];
+    const loadFeedPage = createLoadFeedPage({
+      fetch: async function fetchPage(input) {
+        urls.push(requestTarget(input));
+        return Response.json({ posts: [] });
+      }
+    });
+    await loadFeedPage({ search: emptyFeedSearch, cursor: nothing(), delayInMilliseconds: 2000 });
+
+    assert.deepStrictEqual(urls, ['/posts?limit=50&delayMs=2000']);
   });
 });

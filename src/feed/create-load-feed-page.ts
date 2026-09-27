@@ -6,9 +6,19 @@ import { readPostPage, type FeedPage } from './read-post-page';
 
 const pageLimit = 50;
 
+export const slowFeedDelayInMilliseconds = 2000;
+
+export function feedDelayInMilliseconds(slow: boolean): number {
+  if (slow) {
+    return slowFeedDelayInMilliseconds;
+  }
+  return 0;
+}
+
 export type FeedPageRequest = {
   readonly search: FeedSearch;
   readonly cursor: Maybe<string>;
+  readonly delayInMilliseconds: number;
 };
 
 export type LoadFeedPageError = 'invalid' | 'network';
@@ -26,6 +36,9 @@ function requestUrl(request: FeedPageRequest): string {
   params.set('limit', String(pageLimit));
   if (!isNothing(request.cursor)) {
     params.set('cursor', request.cursor.value);
+  }
+  if (request.delayInMilliseconds > 0) {
+    params.set('delayMs', String(request.delayInMilliseconds));
   }
   return `/posts?${params.toString()}`;
 }

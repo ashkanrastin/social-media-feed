@@ -1,7 +1,7 @@
 import type { WallClock } from '@enormora/wall-clock/wall-clock';
 import React, { useState, type JSX } from 'react';
-import type { LoadFeedPage } from './feed/create-load-feed-page';
-import { FeedList } from './feed/feed-list';
+import { feedDelayInMilliseconds, type LoadFeedPage } from './feed/create-load-feed-page';
+import { FeedList, FeedSkeleton } from './feed/feed-list';
 import { feedQueryKey, useFeedPages } from './feed/use-feed-pages';
 import type { FeedPage } from './feed/read-post-page';
 import { FeedFilters, FeedSearchField } from './search/feed-filters';
@@ -11,9 +11,10 @@ import { ThemeToggle, type FeedTheme } from './theme/theme-toggle';
 
 export const feedTitle = 'Social feed';
 
-const postsLoadingLabel = 'Loading posts';
 const postsFailedLabel = 'Could not load posts';
 const emptyFeedLabel = 'No posts match.';
+const slowLoadingLabel = 'Slow loading';
+const normalLoadingLabel = 'Normal loading';
 
 type AppProps = {
   readonly loadFeedPage: LoadFeedPage;
@@ -25,6 +26,7 @@ type AppProps = {
 type FeedLoadProps = {
   readonly query: ReturnType<typeof useFeedPages>;
   readonly search: FeedSearch;
+  readonly delayInMilliseconds: number;
 };
 
 type EmptyMatchProps = {
@@ -48,6 +50,34 @@ function mainClassName(theme: FeedTheme): string {
   return colors;
 }
 
+function debugButtonLabel(slow: boolean): string {
+  if (slow) {
+    return normalLoadingLabel;
+  }
+  return slowLoadingLabel;
+}
+
+type DebugDelayButtonProps = {
+  readonly slow: boolean;
+  readonly onSlow: (slow: boolean) => void;
+};
+
+function DebugDelayButton(props: DebugDelayButtonProps): JSX.Element {
+  function toggleSlow(): void {
+    props.onSlow(!props.slow);
+  }
+  return (
+    <button
+      aria-pressed={props.slow}
+      className='focus-ring shrink-0 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100'
+      onClick={toggleSlow}
+      type='button'
+    >
+      {debugButtonLabel(props.slow)}
+    </button>
+  );
+}
+
 function EmptyMatch(props: EmptyMatchProps): JSX.Element {
   if (!isEmptyFeed(props.pages)) {
     return <div />;
@@ -57,7 +87,7 @@ function EmptyMatch(props: EmptyMatchProps): JSX.Element {
 
 function FeedLoad(props: FeedLoadProps): JSX.Element {
   if (props.query.status === 'pending') {
-    return <p className='px-6 pb-8'>{postsLoadingLabel}</p>;
+    return <FeedSkeleton />;
   }
   if (props.query.status === 'error') {
     return <p className='px-6 pb-8'>{postsFailedLabel}</p>;
@@ -71,7 +101,7 @@ function FeedLoad(props: FeedLoadProps): JSX.Element {
         isFetchNextPageError={props.query.isFetchNextPageError}
         isFetchingNextPage={props.query.isFetchingNextPage}
         pages={props.query.data.pages}
-        queryKey={feedQueryKey(props.search).join(' ')}
+        queryKey={feedQueryKey(props.search, props.delayInMilliseconds).join(' ')}
       />
     </React.Fragment>
   );
@@ -83,8 +113,9 @@ export function App(props: AppProps): JSX.Element {
     writeSearchParams: props.writeSearchParams,
     wallClock: props.wallClock
   });
-  const query = useFeedPages(props.loadFeedPage, controls.search);
   const [theme, setTheme] = useState<FeedTheme>('light');
+  const [slow, setSlow] = useState(false);
+  const query = useFeedPages(props.loadFeedPage, controls.search, feedDelayInMilliseconds(slow));
   return (
     <main className={mainClassName(theme)}>
       <header className='flex items-center gap-3 px-4 pt-6 pb-4 sm:px-6'>
@@ -95,8 +126,11 @@ export function App(props: AppProps): JSX.Element {
           <ThemeToggle onTheme={setTheme} theme={theme} />
         </div>
       </header>
+      <div className='px-4 pb-2 sm:px-6'>
+        <DebugDelayButton onSlow={setSlow} slow={slow} />
+      </div>
       <div className='flex min-h-0 flex-1 flex-col'>
-        <FeedLoad query={query} search={controls.search} />
+        <FeedLoad delayInMilliseconds={feedDelayInMilliseconds(slow)} query={query} search={controls.search} />
       </div>
     </main>
   );

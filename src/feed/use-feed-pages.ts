@@ -11,8 +11,8 @@ import { toFeedSearchParams, type FeedSearch } from '../search/feed-search';
 import type { LoadFeedPage } from './create-load-feed-page';
 import type { FeedPage } from './read-post-page';
 
-export function feedQueryKey(search: FeedSearch): readonly [string, string] {
-  return ['posts', toFeedSearchParams(search).toString()];
+export function feedQueryKey(search: FeedSearch, delayInMilliseconds: number): readonly [string, string, number] {
+  return ['posts', toFeedSearchParams(search).toString(), delayInMilliseconds];
 }
 
 function stopPaging(): ReturnType<GetNextPageParamFunction<string, FeedPage>> {
@@ -39,15 +39,17 @@ function cursorFrom(pageParam: string): Maybe<string> {
 
 export function useFeedPages(
   loadFeedPage: LoadFeedPage,
-  search: FeedSearch
+  search: FeedSearch,
+  delayInMilliseconds: number
 ): UseInfiniteQueryResult<InfiniteData<FeedPage, string>> {
   return useInfiniteQuery({
-    queryKey: feedQueryKey(search),
+    queryKey: feedQueryKey(search, delayInMilliseconds),
     initialPageParam: '',
     queryFn: async function loadPage(context): Promise<FeedPage> {
       const page = await loadFeedPage({
         search,
-        cursor: cursorFrom(context.pageParam)
+        cursor: cursorFrom(context.pageParam),
+        delayInMilliseconds
       });
       if (isErr(page)) {
         throw new Error(page.error);

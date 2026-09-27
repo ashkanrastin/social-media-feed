@@ -27,7 +27,7 @@ function writeSearchParams(params: URLSearchParams): void {
   writtenQueries.push(params.toString());
 }
 
-function renderApp(): ReturnType<typeof render> {
+function renderApp(waitForPosts = false): ReturnType<typeof render> {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } }
   });
@@ -37,6 +37,14 @@ function renderApp(): ReturnType<typeof render> {
   return render(
     <App
       loadFeedPage={async function loadFeedPage() {
+        if (waitForPosts) {
+          const gate = { open: true };
+          await new Promise(function keepPending() {
+            if (gate.open) {
+              gate.open = false;
+            }
+          });
+        }
         return ok({ posts: [], nextCursor: nothing() });
       }}
       readSearchParams={readSearchParams}
@@ -66,5 +74,22 @@ describe('app', function () {
 
     assert.strictEqual(view.container.querySelector('main.dark') instanceof HTMLElement, true);
     assert.strictEqual(view.getByRole('button', { name: 'Light mode' }).getAttribute('aria-pressed'), 'true');
+  });
+
+  it('shows skeleton cards while posts are loading', async function () {
+    cleanup();
+    const view = renderApp(true);
+    const loading = await view.findByLabelText('Loading posts');
+
+    assert.strictEqual(loading.querySelector('.animate-pulse') instanceof HTMLElement, true);
+  });
+
+  it('marks slow loading as pressed', function () {
+    cleanup();
+    const view = renderApp();
+
+    fireEvent.click(view.getByRole('button', { name: 'Slow loading' }));
+
+    assert.strictEqual(view.getByRole('button', { name: 'Normal loading' }).getAttribute('aria-pressed'), 'true');
   });
 });

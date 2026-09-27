@@ -29,7 +29,9 @@ type RowVirtualizer = ReturnType<typeof useVirtualizer<HTMLDivElement, HTMLDivEl
 const estimatedRowHeight = 560;
 const rowOverscan = 5;
 const loadingMoreLabel = 'Loading more';
+const loadingPostsLabel = 'Loading posts';
 const retryLabel = 'Try again';
+const skeletonKeys = ['first', 'second', 'third'] as const;
 
 export const feedListLabel = 'Posts';
 
@@ -131,6 +133,37 @@ type LoaderRowProps = {
   readonly isFetchNextPageError: boolean;
 };
 
+function SkeletonCard(): JSX.Element {
+  return (
+    <div className='mx-auto max-w-xl animate-pulse overflow-hidden rounded-2xl border border-stone-200 bg-white dark:border-stone-700 dark:bg-stone-900'>
+      <div className='flex items-center gap-3 px-4 pt-4'>
+        <div className='h-10 w-10 rounded-full bg-stone-200 dark:bg-stone-800' />
+        <div className='grid gap-2'>
+          <div className='h-4 w-32 rounded bg-stone-200 dark:bg-stone-800' />
+          <div className='h-3 w-20 rounded bg-stone-200 dark:bg-stone-800' />
+        </div>
+      </div>
+      <div className='mx-4 mt-4 h-4 w-2/3 rounded bg-stone-200 dark:bg-stone-800' />
+      <div className='mt-4 aspect-[3/2] bg-stone-200 dark:bg-stone-800' />
+      <div className='mx-4 my-3 h-3 w-24 rounded bg-stone-200 dark:bg-stone-800' />
+    </div>
+  );
+}
+
+export function FeedSkeleton(): JSX.Element {
+  return (
+    <div aria-busy='true' aria-label={loadingPostsLabel} className='min-h-0 flex-1 overflow-y-auto'>
+      {skeletonKeys.map(function renderSkeleton(key) {
+        return (
+          <div className='px-4 py-2' key={key}>
+            <SkeletonCard />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function LoaderRow(props: LoaderRowProps): JSX.Element {
   function retry(): void {
     startNextPage(props.fetchNextPage);
@@ -142,7 +175,11 @@ function LoaderRow(props: LoaderRowProps): JSX.Element {
       </button>
     );
   }
-  return <p className='px-6 py-4'>{loadingMoreLabel}</p>;
+  return (
+    <div aria-label={loadingMoreLabel} className='px-4 py-2'>
+      <SkeletonCard />
+    </div>
+  );
 }
 
 type PostKeyHandler = (index: number, key: string) => void;

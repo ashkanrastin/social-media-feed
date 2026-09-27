@@ -45,7 +45,7 @@ function renderPages(): RenderHookResult<ReturnType<typeof useFeedPages>, Wrappe
   });
   return renderHook(
     function usePages() {
-      return useFeedPages(loadTwoPages, emptyFeedSearch);
+      return useFeedPages(loadTwoPages, emptyFeedSearch, 0);
     },
     {
       wrapper: function Wrapper(props: WrapperProps): JSX.Element {
@@ -57,7 +57,8 @@ function renderPages(): RenderHookResult<ReturnType<typeof useFeedPages>, Wrappe
 
 describe('feed pages', function () {
   it('puts the search in the query key', function () {
-    assert.deepStrictEqual(feedQueryKey({ ...emptyFeedSearch, text: just('ada') }), ['posts', 'q=ada']);
+    assert.deepStrictEqual(feedQueryKey({ ...emptyFeedSearch, text: just('ada') }, 0), ['posts', 'q=ada', 0]);
+    assert.deepStrictEqual(feedQueryKey(emptyFeedSearch, 2000), ['posts', '', 2000]);
   });
 
   it('stops when the page has no cursor', function () {
