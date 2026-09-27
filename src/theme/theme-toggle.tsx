@@ -1,4 +1,5 @@
 import React, { type JSX } from 'react';
+import { focusRingClassName } from '../focus-ring';
 
 export const feedThemes = ['light', 'dark'] as const;
 
@@ -33,7 +34,7 @@ export function ThemeToggle(props: ThemeToggleProps): JSX.Element {
   return (
     <button
       aria-pressed={props.theme === 'dark'}
-      className='shrink-0 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100'
+      className={`shrink-0 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 ${focusRingClassName}`}
       onClick={toggleTheme}
       type='button'
     >

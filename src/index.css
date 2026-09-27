@@ -1,3 +1,12 @@
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.focus-ring:focus {
+  outline: 2px solid #1c1917;
+  outline-offset: 2px;
+}
+
+.dark .focus-ring:focus {
+  outline-color: #fafaf9;
+}
