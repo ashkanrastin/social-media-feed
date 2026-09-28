@@ -7,7 +7,7 @@ import type { FeedPage } from './feed/read-post-page';
 import { FeedFilters, FeedSearchField } from './search/feed-filters';
 import type { FeedSearch } from './search/feed-search';
 import { useFeedSearch } from './search/use-feed-search';
-import { ThemeToggle, type FeedTheme } from './theme/theme-toggle';
+import { ThemeToggle, type FeedTheme, initialTheme } from './theme/theme-toggle';
 
 export const feedTitle = 'Social feed';
 
@@ -20,6 +20,7 @@ type AppProps = {
   readonly readSearchParams: () => URLSearchParams;
   readonly writeSearchParams: (params: URLSearchParams) => void;
   readonly nextLikeStatus: NextLikeStatus;
+  readonly systemPrefersDark: boolean;
 };
 
 type FeedLoadProps = {
@@ -88,7 +89,9 @@ export function App(props: AppProps): JSX.Element {
     writeSearchParams: props.writeSearchParams,
     wallClock: props.wallClock
   });
-  const [theme, setTheme] = useState<FeedTheme>('light');
+  const [theme, setTheme] = useState<FeedTheme>(function resolveInitialTheme() {
+    return initialTheme(props.systemPrefersDark);
+  });
   const query = useFeedPages(props.loadFeedPage, controls.search, feedDelayInMilliseconds(controls.search.slow));
   return (
     <main className={mainClassName(theme)}>

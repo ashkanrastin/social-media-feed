@@ -34,7 +34,14 @@ function succeedLike(): 200 {
   return 200;
 }
 
-function renderApp(waitForPosts = false, initialQuery = ''): ReturnType<typeof render> {
+type RenderAppOptions = {
+  readonly waitForPosts?: boolean;
+  readonly initialQuery?: string;
+  readonly systemPrefersDark?: boolean;
+};
+
+function renderApp(options: RenderAppOptions = {}): ReturnType<typeof render> {
+  const { waitForPosts = false, initialQuery = '', systemPrefersDark = false } = options;
   function readSearchParams(): URLSearchParams {
     return new URLSearchParams(initialQuery);
   }
@@ -59,6 +66,7 @@ function renderApp(waitForPosts = false, initialQuery = ''): ReturnType<typeof r
       }}
       readSearchParams={readSearchParams}
       nextLikeStatus={succeedLike}
+      systemPrefersDark={systemPrefersDark}
       wallClock={wallClock}
       writeSearchParams={writeSearchParams}
     />,
@@ -87,9 +95,25 @@ describe('app', function () {
     assert.strictEqual(view.getByRole('button', { name: 'Light mode' }).getAttribute('aria-pressed'), 'true');
   });
 
+  it('starts in dark mode when the system prefers dark', function () {
+    cleanup();
+    const view = renderApp({ systemPrefersDark: true });
+
+    assert.strictEqual(view.container.querySelector('main.dark') instanceof HTMLElement, true);
+    assert.strictEqual(view.getByRole('button', { name: 'Light mode' }).getAttribute('aria-pressed'), 'true');
+  });
+
+  it('starts in light mode when the system prefers light', function () {
+    cleanup();
+    const view = renderApp({ systemPrefersDark: false });
+
+    assert.strictEqual(view.container.querySelector('main.dark'), null);
+    assert.strictEqual(view.getByRole('button', { name: 'Dark mode' }).getAttribute('aria-pressed'), 'false');
+  });
+
   it('shows skeleton cards while posts are loading', async function () {
     cleanup();
-    const view = renderApp(true);
+    const view = renderApp({ waitForPosts: true });
     const loading = await view.findByLabelText('Loading posts');
 
     assert.strictEqual(loading.querySelector('.animate-pulse') instanceof HTMLElement, true);
@@ -108,7 +132,7 @@ describe('app', function () {
 
   it('restores slow loading after a refresh', function () {
     cleanup();
-    const view = renderApp(false, 'slow=1');
+    const view = renderApp({ initialQuery: 'slow=1' });
 
     assert.strictEqual(view.getByRole('button', { name: 'Filters (1)' }).tagName, 'BUTTON');
     assert.strictEqual(isChecked(view.getByRole('checkbox', { hidden: true, name: 'Slow loading' })), true);

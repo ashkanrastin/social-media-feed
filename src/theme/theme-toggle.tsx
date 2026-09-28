@@ -4,6 +4,13 @@ export const feedThemes = ['light', 'dark'] as const;
 
 export type FeedTheme = (typeof feedThemes)[number];
 
+export function initialTheme(systemPrefersDark: boolean): FeedTheme {
+  if (systemPrefersDark) {
+    return 'dark';
+  }
+  return 'light';
+}
+
 const darkModeLabel = 'Dark mode';
 const lightModeLabel = 'Light mode';
 

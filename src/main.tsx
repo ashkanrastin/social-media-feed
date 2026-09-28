@@ -21,6 +21,8 @@ function writeSearchParams(params: URLSearchParams): void {
   history.replaceState({}, '', path);
 }
 
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
 const likeFailureCutoff = 128;
 
 function nextLikeStatus(): LikeStatus {
@@ -40,6 +42,7 @@ function renderApp(element: Element): void {
         loadFeedPage={loadFeedPage}
         nextLikeStatus={nextLikeStatus}
         readSearchParams={readSearchParams}
+        systemPrefersDark={systemPrefersDark}
         wallClock={wallClock}
         writeSearchParams={writeSearchParams}
       />
