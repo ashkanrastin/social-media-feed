@@ -9,7 +9,6 @@ import React, {
   type SubmitEvent as FormSubmit
 } from 'react';
 import { isNothing, nothing, of, type Maybe } from 'true-myth/maybe';
-import { focusRingClassName } from '../focus-ring';
 import { feedStatuses } from '../post/feed-post';
 import {
   activeFilterCount,
@@ -32,9 +31,9 @@ const anyLabel = 'Any';
 const applyLabel = 'Apply';
 const resetLabel = 'Reset';
 const slowLoadingLabel = 'Slow loading';
-const fieldClassName = `rounded-lg border border-stone-300 bg-white px-3 py-2 text-base text-stone-900 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 ${focusRingClassName}`;
+const fieldClassName = 'h-10 rounded-lg border border-stone-300 bg-white px-3 py-2 text-base text-stone-900 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100';
 const labelClassName = 'grid gap-1 text-sm text-stone-600 dark:text-stone-400';
-const quietButtonClassName = `shrink-0 rounded-lg border border-stone-300 bg-white text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 ${focusRingClassName}`;
+const quietButtonClassName = 'shrink-0 h-10 rounded-lg border border-stone-300 bg-white text-sm dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100';
 
 const feedFilterTags = ['books', 'cooking', 'craft', 'games', 'garden', 'music', 'photos', 'travel'] as const;
 
@@ -174,7 +173,7 @@ function FilterDialog(props: FilterDialogProps): JSX.Element {
           <input className={fieldClassName} onChange={changeTo} type='date' value={props.draft.to} />
         </label>
         <label className='flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400'>
-          <input checked={props.draft.slow} className={focusRingClassName} onChange={changeSlow} type='checkbox' />
+          <input checked={props.draft.slow} onChange={changeSlow} type='checkbox' />
           {slowLoadingLabel}
         </label>
         <div className='mt-3 flex justify-end gap-3'>
@@ -182,7 +181,7 @@ function FilterDialog(props: FilterDialogProps): JSX.Element {
             {resetLabel}
           </button>
           <button
-            className={`rounded-lg bg-stone-900 px-4 py-2 text-white dark:bg-stone-100 dark:text-stone-900 ${focusRingClassName}`}
+            className='rounded-lg bg-stone-900 px-4 py-2 text-white dark:bg-stone-100 dark:text-stone-900'
             type='submit'
           >
             {applyLabel}

@@ -1,5 +1,4 @@
-import React, { type JSX } from 'react';
-import { focusRingClassName } from '../focus-ring';
+import { type JSX } from 'react';
 
 export const feedThemes = ['light', 'dark'] as const;
 
@@ -20,7 +19,7 @@ function nextTheme(theme: FeedTheme): FeedTheme {
   return 'dark';
 }
 
-const floatingButtonClassName = `fixed right-4 bottom-4 z-20 flex size-14 items-center justify-center rounded-full border border-stone-300 bg-white shadow-lg dark:border-stone-600 dark:bg-stone-900 ${focusRingClassName}`;
+const floatingButtonClassName = 'fixed right-4 bottom-4 z-20 flex size-14 items-center justify-center rounded-full border border-stone-300 bg-white shadow-lg dark:border-stone-600 dark:bg-stone-900';
 
 function themeLabel(theme: FeedTheme): string {
   if (theme === 'dark') {
