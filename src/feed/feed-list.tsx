@@ -268,7 +268,7 @@ function PostRow(props: PostRowProps): JSX.Element {
     props.onPostKey(props.index, keyEvent.key);
   }
   return (
-    <div className='rounded-2xl px-4 py-2' data-post-focus='true' onKeyDown={onKeyDown} tabIndex={0}>
+    <div className='rounded-2xl px-4 py-2 outline-none' data-post-focus='true' onKeyDown={onKeyDown} tabIndex={0}>
       <PostCard like={props.like} onLike={props.onLike} post={props.post} />
     </div>
   );
