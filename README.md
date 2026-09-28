@@ -8,22 +8,17 @@ A feed of posts you can search, filter, and like. The list loads 50 posts at a t
 
 ## Run
 
-Install the app and the mock server, then start both. Use two terminals.
+Install the app and the mock server, then start both with a single command.
 
 ```bash
 npm install
 npm install --prefix mock-server
+npm run demo
 ```
 
-```bash
-npm run mock-server
-```
+This launches the mock server and the Vite dev server together. Open http://localhost:5173.
 
-```bash
-npm run dev
-```
-
-Open http://localhost:5173. The app proxies `/posts`, `/images`, and `/avatars` to the mock server on http://127.0.0.1:4010. If that server is not running, the feed cannot load.
+The app proxies `/posts`, `/images`, and `/avatars` to the mock server on http://127.0.0.1:4010. If you prefer separate terminals, run `npm run mock-server` and `npm run dev` instead.
 
 ## What you can do
 
@@ -38,8 +33,9 @@ Open http://localhost:5173. The app proxies `/posts`, `/images`, and `/avatars` 
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Start the Vite app |
-| `npm run mock-server` | Start the mock server |
+| `npm run demo` | Start both the app and mock server |
+| `npm run dev` | Start the Vite app only |
+| `npm run mock-server` | Start the mock server only |
 | `npm test` | Run the tests |
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Typecheck the app and the mock server |

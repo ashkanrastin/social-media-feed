@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc --noEmit && vite build",
+    "demo": "node -e \"const{exec}=require('child_process');const s=exec('npm run mock-server',{stdio:'inherit'});const v=exec('npm run dev',{stdio:'inherit'});s.stdout.pipe(process.stdout);s.stderr.pipe(process.stderr);v.stdout.pipe(process.stdout);v.stderr.pipe(process.stderr);process.on('SIGINT',()=>{s.kill();v.kill()})\"",
     "dev": "vite",
     "format": "prettier --write .",
     "lint": "eslint .",
