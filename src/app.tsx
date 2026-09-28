@@ -94,10 +94,9 @@ export function App(props: AppProps): JSX.Element {
     <main className={mainClassName(theme)}>
       <header className='flex items-center gap-3 px-4 pt-6 pb-4 sm:px-6'>
         <h1 className='shrink-0 text-2xl font-semibold sm:text-3xl'>{feedTitle}</h1>
-        <div className='ml-auto flex min-w-0 items-center gap-3'>
+        <div className='ml-auto flex min-w-0 flex-1 items-center justify-end gap-3'>
           <FeedSearchField onText={controls.setDraftText} value={controls.draftText} />
           <FeedFilters onSearch={controls.replaceSearch} search={controls.search} />
-          <ThemeToggle onTheme={setTheme} theme={theme} />
         </div>
       </header>
       <div className='flex min-h-0 flex-1 flex-col'>
@@ -109,6 +108,7 @@ export function App(props: AppProps): JSX.Element {
           wallClock={props.wallClock}
         />
       </div>
+      <ThemeToggle onTheme={setTheme} theme={theme} />
     </main>
   );
 }
