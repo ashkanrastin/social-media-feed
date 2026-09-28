@@ -1,0 +1,38 @@
+---
+description: Do not use TypeScript enums; model closed sets with unions and as const
+alwaysApply: true
+---
+
+# Avoid TypeScript enums
+
+Do not use `enum` or `const enum`. A closed set of values is a type-level problem. Enum is a TypeScript-only runtime object, so it is heavier than it looks and is not erasable syntax.
+
+Use a string literal union when you only need the type. Use a `const` object when you also need runtime values. Use an `as const` array when the list itself matters.
+
+```typescript
+// ❌ TypeScript runtime construct, including const enum
+enum OrderSide {
+    Buy = 'buy',
+    Sell = 'sell'
+}
+
+// ✅ union when the type is enough
+type OrderSide = 'buy' | 'sell';
+
+function isBuy(side: OrderSide): boolean {
+    return side === 'buy';
+}
+
+// ✅ const object when you need runtime values
+export const GridStatus = {
+    Open: 'open',
+    Flipped: 'flipped'
+} as const;
+
+export type GridStatus = (typeof GridStatus)[keyof typeof GridStatus];
+
+// ✅ as const array when the list matters
+export const gridSides = ['buy', 'sell'] as const;
+
+export type GridSide = (typeof gridSides)[number];
+```

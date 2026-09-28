@@ -1,0 +1,43 @@
+---
+description: Return True Myth Result or Task for expected failures; do not throw or write try/catch
+alwaysApply: true
+---
+
+# Avoid throwing for expected failures
+
+A missing quote, a rejected submit, and invalid JSON are expected outcomes. Do not throw. Do not write `try`/`catch`. Sync work returns `Result<T, E>` via `ok`, `err`, and `tryOrElse`. Async work returns `Task<T, E>` via `fromPromise`. Chain `andThen` and `map`.
+
+`fromPromise` is the boundary for `fetch` and `response.json()`. The catch lives inside True Myth, not in our files. See [ADR-013](../../docs/adr/013-inject-fetch-no-try-catch.md). Programming errors and invariant violations may still fail fast.
+
+Absence is Maybe. Failure is Result or Task. See avoid-null-and-undefined.mdc.
+
+```typescript
+import { fromPromise, reject, type Task } from 'true-myth/task';
+
+type User = { readonly id: string };
+
+// ❌ Catch. The signature pretends loadUser cannot fail.
+function loadUser(id: string): User {
+    try {
+        return parseUser(fetchUser(id));
+    } catch {
+        throw new Error('load failed');
+    }
+}
+
+// ✅ Failure is in the type. fetch is injected. No try/catch.
+function createLoadUser(fetchImpl: typeof fetch) {
+    return function loadUser(id: string): Task<User, 'network' | 'invalid'> {
+        return fromPromise(fetchImpl(`/users/${id}`), function network() {
+            return 'network';
+        }).andThen(function parse(response) {
+            if (!response.ok) {
+                return reject('invalid');
+            }
+            return fromPromise(response.json(), function invalid() {
+                return 'invalid';
+            });
+        });
+    };
+}
+```

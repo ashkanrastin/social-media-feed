@@ -1,0 +1,38 @@
+---
+description: Inject stubs and fakes at composition; never intercept modules with jest.mock or vi.mock
+alwaysApply: true
+---
+
+# Tests construct software like production
+
+Do not use `jest.mock`, `vi.mock`, or any load-time module interception. ESM imports are static. Module mocking rewrites the module graph, so tests no longer run the same system as production. Import paths then become the test contract. Renaming a file breaks tests even when behavior is unchanged.
+
+Production wires collaborators at composition. Tests do the same. Pass a stub, fake, spy, or dummy into the factory. Do not reach through the module system to replace `./alpaca-client.js`. See factory-functions.mdc.
+
+```typescript
+import assert from 'node:assert';
+
+// ❌ Runner rewrites imports. The test owns file layout, not behavior.
+vi.mock('./alpaca-client.js');
+jest.mock('./ig-client.js');
+
+// ✅ Same factory as production, test-owned collaborators
+suite('subscribe', function () {
+    test('skips save when already subscribed', async function () {
+        async function findSubscriberByEmail(email: string) {
+            return { email };
+        }
+        async function saveSubscriber(): Promise<void> {}
+        async function sendConfirmationEmail(): Promise<void> {}
+
+        const subscribe = createSubscribeToNewsletter({
+            findSubscriberByEmail,
+            saveSubscriber,
+            sendConfirmationEmail
+        });
+
+        const result = await subscribe('reader@example.com');
+        assert.deepStrictEqual(result, { status: 'alreadySubscribed' });
+    });
+});
+```

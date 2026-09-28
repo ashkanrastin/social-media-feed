@@ -1,0 +1,24 @@
+---
+description: Do not read window, document, process.env, or globalThis in application code; inject the environment at the composition root
+alwaysApply: true
+---
+
+# Avoid direct global access
+
+`window`, `document`, `navigator`, `localStorage`, `process.env`, and `globalThis` are the runtime. Reading them in application code hides a dependency. Unit tests then need jsdom or a stubbed environment. This is a Node.js bot. Application code has no browser.
+
+Inject env, clock, timers, and `fetch` at the composition root. Pass values inward. Tests and `src/main.ts` / `src/composition/` may touch the real runtime. Do not call `Date.now()`, `new Date()` without arguments, `setTimeout`, `setInterval`, or global `fetch` in application logic. See time-is-an-external-dependency.mdc and [ADR-013](../../docs/adr/013-inject-fetch-no-try-catch.md).
+
+```typescript
+type Environment = { readonly apiKey: string };
+
+// ❌ Hidden runtime. Mocha would need jsdom or a fake process.env.
+function readApiKey(): string {
+    return process.env.API_KEY ?? '';
+}
+
+// ✅ The entry file reads the environment once and passes data in.
+function createBrokerClient(environment: Environment) {
+    return { apiKey: environment.apiKey };
+}
+```

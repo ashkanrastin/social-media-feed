@@ -1,0 +1,41 @@
+---
+description: Unit-test happy-zone application logic without jsdom, fake timers, or the network
+alwaysApply: true
+---
+
+# Keep the happy zone boring to test
+
+The happy zone is application decisions: explicit input, explicit output, no hidden globals. Unit tests of that code do not boot jsdom, do not use fake timers as a runner trick, and do not touch the network.
+
+Time is an injected dependency. Pass a clock or a `Date` into the decision. Do not read `new Date()` or `Date.now()` inside the happy zone.
+See time-is-an-external-dependency.mdc and inject-wall-clock.mdc.
+
+Adapters, UI, and broker clients live outside. Test them at their own boundary with controlled inputs. Do not pull React, `fetch`, or Alpaca into a unit test of a rule.
+
+```typescript
+import assert from 'node:assert';
+import { ok } from 'true-myth/result';
+
+type Grid = { expiresAt: Date };
+
+// ❌ Rule reads the clock and the network
+async function shouldFlip(grid: Grid): Promise<boolean> {
+    const quote = await fetch('https://api.alpaca.markets/v2/stocks/AAPL/quotes/latest');
+    return Date.now() > grid.expiresAt.getTime() && quote.ok;
+}
+
+// ✅ Pure rule. Mocha needs no jsdom, fake timers, or HTTP.
+function shouldFlip(grid: Grid, now: Date) {
+    return ok(now.getTime() > grid.expiresAt.getTime());
+}
+
+suite('shouldFlip', function () {
+    test('is false before expiry', function () {
+        const result = shouldFlip(
+            { expiresAt: new Date('2026-09-02T00:00:00Z') },
+            new Date('2026-09-01T00:00:00Z')
+        );
+        assert.strictEqual(result.unwrapOr(true), false);
+    });
+});
+```

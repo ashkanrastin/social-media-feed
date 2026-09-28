@@ -1,0 +1,36 @@
+---
+description: Never introduce null or undefined; model absence as True Myth Maybe
+alwaysApply: true
+---
+
+# Avoid null and undefined
+
+Never introduce `null` or `undefined` in application code. This repo does not prefer undefined for simple absence. Domain absence is `Maybe<T>`, not `T | null` or `T | undefined`. Convert nullable API values at the boundary with `of()`. Optional chaining does not model absence; it only quietens failures.
+
+ESLint errors on `null` literals, the `undefined` global, `null`/`undefined` in types, and `void 0`. The message names `just`, `nothing`, and `of` from `true-myth/maybe`. Keep `unicorn/no-null` off. It advertises `undefined`.
+
+```typescript
+import { just, nothing, of, type Maybe } from 'true-myth/maybe';
+
+type User = { readonly name: string };
+
+// ❌ null, undefined, or optional chaining
+function findUser(id: string): User | null {
+    return users.get(id) ?? null;
+}
+const street = user?.address?.street;
+
+// ✅ Convert at the boundary; just / nothing in domain code
+function findUser(id: string): Maybe<User> {
+    return of(users.get(id));
+}
+
+const street = findUser('42')
+    .map(function toAddress(user) {
+        return user.address;
+    })
+    .unwrapOr('Unknown street');
+
+const missing = nothing<User>();
+const present = just({ name: 'Ada' });
+```

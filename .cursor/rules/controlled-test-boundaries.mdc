@@ -1,0 +1,41 @@
+---
+description: PR tests use controlled replacements; live Alpaca, IG, and network are not pull-request gates
+alwaysApply: true
+---
+
+# Do not test what you do not control
+
+A red PR test must mean this change broke behavior this team owns and can fix. Live Alpaca, IG, shared staging, and the public network are not that signal. They go red because of vendor downtime, expired test accounts, or someone else's deploy.
+
+PR tests inject stubs and fakes at the broker and HTTP boundary. Drive success, rejection, timeout, and invalid payloads on purpose. Validate unknown responses in adapter tests with fixtures you own. Do not wait for a live API to misbehave.
+
+Vendor checks, post-deploy smoke tests, and production monitors belong on their own cadence and owner. They must not block unrelated pull requests. Retries do not make an uncontrolled dependency deterministic.
+
+```typescript
+import assert from 'node:assert';
+import { err } from 'true-myth/result';
+
+// ❌ PR gate calls the live broker
+suite('place order', function () {
+    test('submits a limit buy', async function () {
+        const result = await placeOrder(createAlpacaClient());
+        assert.strictEqual(result.isOk, true);
+    });
+});
+
+// ✅ Controlled replacement. The team owns the failure mode.
+suite('place order', function () {
+    test('maps a rejected submit to err', async function () {
+        async function submitOrder() {
+            return err('insufficientBuyingPower');
+        }
+        const result = await placeOrder({ submitOrder });
+        assert.strictEqual(
+            result.unwrapOrElse(function (reason) {
+                return reason;
+            }),
+            'insufficientBuyingPower'
+        );
+    });
+});
+```

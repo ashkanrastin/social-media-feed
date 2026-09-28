@@ -1,0 +1,49 @@
+---
+description: Inject @enormora/wall-clock; tests advance a deterministic clock, not fake timers
+alwaysApply: true
+---
+
+# Inject a WallClock capability
+
+When code must observe time more than once or schedule work, depend on `WallClock` from `@enormora/wall-clock`. Prefer subpaths `@enormora/wall-clock/wall-clock` and `@enormora/wall-clock/deterministic-wall-clock`. The clock exposes `currentTimestampInMilliseconds`, `currentDate`, `setTimeout`, `clearTimeout`, `setInterval`, and `clearInterval`.
+
+Production calls `createWallClock()` at the composition root. Tests call `createDeterministicWallClock({ initialCurrentTimestampInMilliseconds })` and move time with `advanceByMilliseconds` or `setCurrentTimestampInMilliseconds`. Do not use Mocha or Sinon fake timers.
+
+This package is not a date-fns replacement. It only makes observation and scheduling explicit. Use it for wall-clock time, not monotonic performance measurement.
+
+```typescript
+import assert from 'node:assert';
+import { createDeterministicWallClock } from '@enormora/wall-clock/deterministic-wall-clock';
+import { createWallClock, type WallClock } from '@enormora/wall-clock/wall-clock';
+
+// ❌ Orchestration calls globals. Tests would patch setTimeout.
+function scheduleRefresh(refreshAt: number, refresh: () => void): void {
+    setTimeout(refresh, refreshAt - Date.now());
+}
+
+// ✅ Same factory in production and tests. Tests own the timeline.
+function createScheduleRefresh(wallClock: WallClock) {
+    return function scheduleRefresh(refreshAt: number, refresh: () => void) {
+        const delay = Math.max(0, refreshAt - wallClock.currentTimestampInMilliseconds);
+        return wallClock.setTimeout(refresh, delay);
+    };
+}
+
+createScheduleRefresh(createWallClock());
+
+suite('scheduleRefresh', function () {
+    test('runs at the scheduled timestamp', function () {
+        const wallClock = createDeterministicWallClock({
+            initialCurrentTimestampInMilliseconds: 1_704_067_200_000
+        });
+        let ran = 0;
+        createScheduleRefresh(wallClock)(1_704_067_205_000, function () {
+            ran += 1;
+        });
+        wallClock.advanceByMilliseconds(4_999);
+        assert.strictEqual(ran, 0);
+        wallClock.advanceByMilliseconds(1);
+        assert.strictEqual(ran, 1);
+    });
+});
+```

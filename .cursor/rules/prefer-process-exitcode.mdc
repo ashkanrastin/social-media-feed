@@ -1,0 +1,32 @@
+---
+description: Never call process.exit(); set process.exitCode at the entry point and return
+alwaysApply: true
+---
+
+# Prefer process.exitCode over process.exit()
+
+`process.exit()` sets the status and terminates immediately. Pending stdout can be dropped. Never call `process.exit()`. Application code returns a result. Only the entry file sets `process.exitCode` and returns.
+
+```typescript
+type RunResult =
+    | { readonly type: 'success' }
+    | { readonly type: 'failure'; readonly message: string; readonly exitCode: 1 };
+
+// ❌ Application kills the process. Tests cannot assert the outcome.
+async function run(): Promise<void> {
+    process.exit(1);
+}
+
+// ✅ Inner code returns a result. src/main.ts records the status.
+function toFailure(message: string): RunResult {
+    return { type: 'failure', message, exitCode: 1 };
+}
+
+async function main(result: RunResult): Promise<void> {
+    if (result.type === 'failure') {
+        console.error(result.message);
+        process.exitCode = result.exitCode;
+        return;
+    }
+}
+```
