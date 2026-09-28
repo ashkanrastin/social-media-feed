@@ -2,6 +2,7 @@ import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -26,7 +27,8 @@ import type { FeedPage } from './read-post-page';
 
 type RowVirtualizer = ReturnType<typeof useVirtualizer<HTMLDivElement, HTMLDivElement>>;
 
-const estimatedRowHeight = 560;
+const estimatedRowWithImage = 560;
+const estimatedRowWithoutImage = 240;
 const rowOverscan = 5;
 const loadingMoreLabel = 'Loading more';
 const loadingPostsLabel = 'Loading posts';
@@ -290,12 +292,22 @@ function RowContent(props: RowContentProps): JSX.Element {
   );
 }
 
+function estimateRowHeight(posts: readonly FeedPost[], index: number): number {
+  const post = posts[index];
+  if (typeof post !== 'object' || post.image.length > 0) {
+    return estimatedRowWithImage;
+  }
+  return estimatedRowWithoutImage;
+}
+
 function VirtualRows(props: VirtualRowsProps): JSX.Element {
-  const posts = flattenFeedPosts(props.pages);
+  const posts = useMemo(function memoizedPosts() {
+    return flattenFeedPosts(props.pages);
+  }, [props.pages]);
   const virtualizer = useVirtualizer<HTMLDivElement, HTMLDivElement>({
     count: virtualRowCount(posts.length, props.hasNextPage),
-    estimateSize: function estimateRow() {
-      return estimatedRowHeight;
+    estimateSize: function estimateRow(index) {
+      return estimateRowHeight(posts, index);
     },
     getScrollElement: function scrollElement() {
       return props.element;
